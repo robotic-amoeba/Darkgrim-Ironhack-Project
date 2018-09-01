@@ -1,12 +1,4 @@
 
-window.onload = function() {  
-  
-  var gameBoard;
-  var canvas = document.getElementById("game-board");
-  gameBoard = canvas.getContext("2d");
-  
-}
-
 const TILE_WIDTH = 70; //70px
 const TILE_HEIGHT = 70; 
 var map = [];
@@ -24,35 +16,41 @@ function mapConstructor() { //[x, y]
 }
 
 
+function GameDisplay() {  
+  
+  this.canvas = document.getElementById("game-board");
+  this.gameBoard = this.canvas.getContext("2d");
+  
+}
 
-function paintMap() {
+GameDisplay.prototype.paintMap = function() {
 
-  gameBoard.save();
+  this.gameBoard.save();
 
-  gameBoard.fillStyle = "rgb(125, 128, 70)";
+  this.gameBoard.fillStyle = "rgb(125, 128, 70)";
   //gameBoard.fillRect(0, 0 , 400, 700)
   for (elm of map) { //all map
-    gameBoard.fillRect(elm[0]*TILE_WIDTH, elm[1]*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+    this.gameBoard.fillRect(elm[0]*TILE_WIDTH, elm[1]*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
   }
 
-  gameBoard.restore();
+  this.gameBoard.restore();
 }
 
-function drawWall() {
+GameDisplay.prototype.drawWall = function () {
 
-  gameBoard.save();
-  gameBoard.fillStyle = "rgb(70, 60, 60)";
-  gameBoard.fillRect(14 * TILE_WIDTH, 0, TILE_WIDTH, 10 * TILE_HEIGHT);
-  gameBoard.restore();
+  this.gameBoard.save();
+  this.gameBoard.fillStyle = "rgb(70, 60, 60)";
+  this.gameBoard.fillRect(14 * TILE_WIDTH, 0, TILE_WIDTH, 10 * TILE_HEIGHT);
+  this.gameBoard.restore();
 }
 
 
-function drawRailgun(x, y) {
+GameDisplay.prototype.drawRailgun = function(x, y) {
   
-  gameBoard.save();
-  gameBoard.fillStyle = "rgb(86, 87, 71)";
-  gameBoard.fillRect(x, y, TILE_WIDTH, TILE_HEIGHT);
-  gameBoard.restore();
+  this.gameBoard.save();
+  this.gameBoard.fillStyle = "rgb(86, 87, 71)";
+  this.gameBoard.fillRect(x, y, TILE_WIDTH, TILE_HEIGHT);
+  this.gameBoard.restore();
   
 }
 
