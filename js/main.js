@@ -1,45 +1,70 @@
 window.onload = function() {
-
-var gameDisplay = new GameDisplay();
-
-mapConstructor();
-gameDisplay.paintMap();
-gameDisplay.drawWall();
-gameMain(gameDisplay);
-
+  
+  var gameDisplay = new GameDisplay();
+  
+  mapConstructor();
+  gameMain(gameDisplay);
+  
 }
 
 
 function gameMain(gameDisplay) {
 
-  //GUN--------------------------------------------------------
+  internalClock();
+  
+  function internalClock() {
+    setInterval(function(){
+      
+      
+      moveProjectiles();
+      moveBugs();
+      gameDisplay.paintMap(gunArray, bugArray);
+      
+    }, 40)
+  }
+  
+  //GUNs--------------------------------------------------------
+  
+  var gunArray = [];
+  
   
   function Railgun(x, y) { //x and y are tile numbers
     this.x = x *  TILE_WIDTH;
     this.y = y * TILE_HEIGHT;
     this.bullets = [];
-    this.fireRate = 2000;
+    this.fireRate = 1000;
     this.range = 5;
   }
   
-  var gunArray = [];
+  
+  Railgun.prototype.shoot = function() { //generates new projectiles
+    var self = this;
+    
+    setInterval(function() {
+      
+      var bullet = new Projectile(self.x, self.y);
+      self.bullets.push(bullet);
+      console.log("shoot");
+      
+    }, this.fireRate)  
+  }
+  
+  
   function createGun(x, y) {  //canon, laser
     
     var railGun = new Railgun (x, y);
-
+    
     gunArray.push(railGun);
     console.log(gunArray);
-
-    gameDisplay.drawRailgun(railGun.x, railGun.y);
     railGun.shoot();
+    spawnBug();                    //  <----------------------------
   }
   
-
   var gunButton = document.getElementsByClassName("turret")[0];
-  gunButton.onclick = function() {
-    
+  gunButton.onclick = function() {  
     var gun = createGun(14, gunArray.length);
   }
+  
 
   //PROJECTILES-------------------------------------------------------
   
@@ -48,47 +73,49 @@ function gameMain(gameDisplay) {
   
     this.x = x;
     this.y = y;
-    this.r = 5;
+    this.r = 3;
+    this.speed = 30;
   }
   
-  
-  Railgun.prototype.shoot = function() { //sets new projectiles
-    var self = this;
-    
-    setInterval(function() {
-
-      var bullet = new Projectile(self.x, self.y);  // DEBUG SELF.X UNDEFINED
-      self.bullets.push(bullet);
-      console.log("shoot");
-
-    }, this.fireRate)  
-  }
-
-moveProjectiles();
   function moveProjectiles() { //moves array of projectiles of each gun
-    
-    setInterval(function(){
-    
-      for (gun of gunArray) {
+      
+    for (gun of gunArray) {
 
-        for (bullet of gun.bullets){
-          
-          if (bullet.x < -30) {
-    
-            gun.bullets.splice(bullet);
-    
-          } else {
-    
-            bullet.x -= 10;
-            gameDisplay.paintMap();
-            gameDisplay.drawWall();
-            gameDisplay.drawRailgun(self.x, self.y);
-            gameDisplay.drawProjectiles(bullet);
-          }
-        }
+      for (bullet of gun.bullets){
+
+        bullet.x -= bullet.speed;
+      
       }
-    }, 10)
+    }
   }
+
+  //BUGS
+
+  var bugArray = [];
+
+  function Bug(x, y) {
+
+    this.x = x;
+    this.y = y;
+    this.speed = 1;
+    this.health = 100;
+    this.spawnTime = 5000;
+  }
+
+
+  function spawnBug() {
+
+    var randomYtile = Math.floor((Math.random() * 10));
+    var bug = new Bug(0, randomYtile * TILE_HEIGHT);
+    bugArray.push(bug);
+  }
+
+  function moveBugs() {
+    for (bug of bugArray) {
+      bug.x += bug.speed;
+    }
+  }
+
 
 }
 

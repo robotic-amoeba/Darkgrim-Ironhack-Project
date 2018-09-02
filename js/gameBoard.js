@@ -23,49 +23,71 @@ function GameDisplay() {
   
 }
 
+//----------------------------------------------------------------
 
+GameDisplay.prototype.paintMap = function(gunArray, bugArray) {
 
-GameDisplay.prototype.paintMap = function() {
+  //TERRAIN
 
   this.gameBoard.save();
 
   this.gameBoard.fillStyle = "rgb(125, 128, 70)";
-  //gameBoard.fillRect(0, 0 , 400, 700)
+  
   for (elm of map) { //all map
     this.gameBoard.fillRect(elm[0]*TILE_WIDTH, elm[1]*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
   }
 
   this.gameBoard.restore();
-}
 
-GameDisplay.prototype.drawWall = function () {
+
+  //WALL
 
   this.gameBoard.save();
   this.gameBoard.fillStyle = "rgb(70, 60, 60)";
   this.gameBoard.fillRect(14 * TILE_WIDTH, 0, TILE_WIDTH, 10 * TILE_HEIGHT);
   this.gameBoard.restore();
-}
 
-
-GameDisplay.prototype.drawRailgun = function(x, y) {
   
-  this.gameBoard.save();
-  this.gameBoard.fillStyle = "rgb(86, 87, 71)";
-  this.gameBoard.fillRect(x, y, TILE_WIDTH, TILE_HEIGHT);
-  this.gameBoard.restore();
+  //GUNS
   
-}
+  if (gunArray) {
 
-GameDisplay.prototype.drawProjectiles = function(bullet) {
+    for (gun of gunArray) {
+      
+      this.gameBoard.save();
+      this.gameBoard.fillStyle = "rgb(86, 87, 71)";
+      this.gameBoard.fillRect(gun.x, gun.y, TILE_WIDTH, TILE_HEIGHT);
+      this.gameBoard.restore();
+      this.gameBoard.save();
 
-  this.gameBoard.save();
-  this.gameBoard.beginPath();
-  this.gameBoard.fillStyle = "rgb(0, 0, 0)";
-  this.gameBoard.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
-  this.gameBoard.fill();
-  this.gameBoard.closePath();
-  this.gameBoard.restore();
+      for (bullet of gun.bullets) {
+
+        this.gameBoard.beginPath();
+        this.gameBoard.fillStyle = "rgb(0, 0, 0)";
+        this.gameBoard.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
+        this.gameBoard.fill();
+        this.gameBoard.closePath();
+        this.gameBoard.restore();
+      }
+    }
+  }
+
+  //BUGS
+  
+  if (bugArray) {
+    for (bug of bugArray) {
+
+      this.gameBoard.save();
+        this.gameBoard.fillStyle = "rgb(179, 227, 64)";
+        this.gameBoard.fillRect(bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
+        this.gameBoard.restore();
+        this.gameBoard.save();
+    }
+  }
+    
+
 }
+    
 
 
   
