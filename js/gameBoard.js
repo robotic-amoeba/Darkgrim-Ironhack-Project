@@ -25,12 +25,11 @@ function GameDisplay() {
 
 //----------------------------------------------------------------
 
-GameDisplay.prototype.paintMap = function(gunArray, bugArray) {
+GameDisplay.prototype.paintMap = function(gunPosition, gunArray, bugArray) {
 
   //TERRAIN
 
   this.gameBoard.save();
-
   this.gameBoard.fillStyle = "rgb(125, 128, 70)";
   
   for (elm of map) { //all map
@@ -51,17 +50,17 @@ GameDisplay.prototype.paintMap = function(gunArray, bugArray) {
   //GUNS
   
   if (gunArray) {
-
+    
     for (gun of gunArray) {
       
       this.gameBoard.save();
       this.gameBoard.fillStyle = "rgb(86, 87, 71)";
-      this.gameBoard.fillRect(gun.x, gun.y, TILE_WIDTH, TILE_HEIGHT);
+      this.gameBoard.fillRect(gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
       this.gameBoard.restore();
-      this.gameBoard.save();
-
+      
       for (bullet of gun.bullets) {
-
+        
+        this.gameBoard.save();
         this.gameBoard.beginPath();
         this.gameBoard.fillStyle = "rgb(0, 0, 0)";
         this.gameBoard.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
@@ -71,15 +70,27 @@ GameDisplay.prototype.paintMap = function(gunArray, bugArray) {
       }
     }
   }
+  
+  //GUN PREPOSITION 
+
+  if (gunPosition) {
+
+    this.gameBoard.save();
+    this.gameBoard.fillStyle = "rgb(241, 204, 204)";
+    this.gameBoard.fillRect(gunPosition.x * TILE_WIDTH, gunPosition.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+    this.gameBoard.restore();
+    
+  }
+
 
   //BUGS
   
   if (bugArray) {
     for (bug of bugArray) {
-
+      
       this.gameBoard.save();
-        this.gameBoard.fillStyle = "rgb(179, 227, 64)";
-        this.gameBoard.fillRect(bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
+      this.gameBoard.fillStyle = "rgb(179, 227, 64)";
+      this.gameBoard.fillRect(bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
         this.gameBoard.restore();
         this.gameBoard.save();
     }

@@ -20,7 +20,7 @@ function gameMain(gameDisplay) {
       
       moveProjectiles();
       moveBugs();
-      gameDisplay.paintMap(gunArray, bugArray);
+      gameDisplay.paintMap(gunPosition, gunArray, bugArray);
       
     }, 40)
   }
@@ -28,11 +28,12 @@ function gameMain(gameDisplay) {
   //GUNs--------------------------------------------------------
   
   var gunArray = [];
+  var gunPosition;
   
   
   function Railgun(x, y) { //x and y are tile numbers
-    this.x = x *  TILE_WIDTH;
-    this.y = y * TILE_HEIGHT;
+    this.x = x;
+    this.y = y;
     this.bullets = [];
     this.fireRate = 1000;
     this.range = 5;
@@ -44,16 +45,58 @@ function gameMain(gameDisplay) {
     
     setInterval(function() {
       
-      var bullet = new Projectile(self.x, self.y);
+      var bullet = new Projectile(self.x * TILE_WIDTH, self.y * TILE_HEIGHT);
       self.bullets.push(bullet);
       
     }, this.fireRate)  
   }
   
   
-  function createGun(x, y) {  //canon, laser
+  function gunPositioning() {
+
+    gunPosition = {
+      x: 14,
+      y: 0
+    }
+
+    document.onkeydown = function(event) {
+
+      switch (event.code) {
+
+        case "ArrowDown":
+        if (gunPosition.y < 9) {
+          gunPosition.y += 1;
+        }
+        break;
+
+        case "ArrowUp":
+        if (gunPosition.y > 0) {
+          gunPosition.y -= 1;
+        }
+        break;
+
+        case "Enter":
+        let vacant = true;
+        for (gun of gunArray) {
+          if (gun.y == gunPosition.y) {
+            vacant = false;
+          }
+        } 
+        if (vacant) {
+          createGun(gunPosition.x, gunPosition.y);
+          gunPosition = null;
+          break;
+        }
+      }
+      return;
+    }
+
+  }
+
+
+  function createGun(x, y) {
     
-    var railGun = new Railgun (x, y);
+    var railGun = new Railgun(x, y);
     
     gunArray.push(railGun);
     railGun.shoot();
@@ -62,7 +105,8 @@ function gameMain(gameDisplay) {
   
   var gunButton = document.getElementsByClassName("turret")[0];
   gunButton.onclick = function() {  
-    var gun = createGun(14, gunArray.length);
+    gunPositioning();
+    //var gun = createGun(14, gunArray.length);
   }
   
 
@@ -130,8 +174,10 @@ function gameMain(gameDisplay) {
 
         bug = bugArray[i];
 
-        if (bug.x + TILE_WIDTH >= bullet.x && bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
+        if (bug.x + TILE_WIDTH >= bullet.x && 
+            bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
           
+
   
           bug.health -= bullet.damage;
   
