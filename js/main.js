@@ -59,7 +59,7 @@ function gameMain(gameDisplay) {
       y: 0
     }
 
-    document.onkeydown = function(event) {
+    window.addEventListener("keydown", function choosePos(event) {  //<---------------------------------------
 
       switch (event.code) {
 
@@ -84,12 +84,12 @@ function gameMain(gameDisplay) {
         } 
         if (vacant) {
           createGun(gunPosition.x, gunPosition.y);
-          gunPosition = null;
-          break;
+          gunPosition = {x: 14, y: 0};
+          window.removeEventListener("keydown", choosePos);
+          return;
         }
       }
-      return;
-    }
+    })
 
   }
 
@@ -106,6 +106,7 @@ function gameMain(gameDisplay) {
   var gunButton = document.getElementsByClassName("turret")[0];
   gunButton.onclick = function() {  
     gunPositioning();
+    return;
     //var gun = createGun(14, gunArray.length);
   }
   
