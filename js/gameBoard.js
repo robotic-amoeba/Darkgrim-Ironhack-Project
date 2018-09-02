@@ -23,6 +23,8 @@ function GameDisplay() {
   
 }
 
+
+
 GameDisplay.prototype.paintMap = function() {
 
   this.gameBoard.save();
@@ -53,6 +55,18 @@ GameDisplay.prototype.drawRailgun = function(x, y) {
   this.gameBoard.restore();
   
 }
+
+GameDisplay.prototype.drawProjectiles = function(bullet) {
+
+  this.gameBoard.save();
+  this.gameBoard.beginPath();
+  this.gameBoard.fillStyle = "rgb(0, 0, 0)";
+  this.gameBoard.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
+  this.gameBoard.fill();
+  this.gameBoard.closePath();
+  this.gameBoard.restore();
+}
+
 
   
 
