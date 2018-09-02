@@ -7,8 +7,10 @@ window.onload = function() {
   
 }
 
-
 function gameMain(gameDisplay) {
+  
+  const TILE_WIDTH = 70; //70px
+  const TILE_HEIGHT = 70;
 
   internalClock();
   
@@ -44,7 +46,6 @@ function gameMain(gameDisplay) {
       
       var bullet = new Projectile(self.x, self.y);
       self.bullets.push(bullet);
-      console.log("shoot");
       
     }, this.fireRate)  
   }
@@ -55,7 +56,6 @@ function gameMain(gameDisplay) {
     var railGun = new Railgun (x, y);
     
     gunArray.push(railGun);
-    console.log(gunArray);
     railGun.shoot();
     spawnBug();                    //  <----------------------------
   }
@@ -74,6 +74,7 @@ function gameMain(gameDisplay) {
     this.x = x;
     this.y = y;
     this.r = 3;
+    this.damage = 10;
     this.speed = 30;
   }
   
@@ -84,7 +85,7 @@ function gameMain(gameDisplay) {
       for (bullet of gun.bullets){
 
         bullet.x -= bullet.speed;
-      
+        detectCollisions(bullet);
       }
     }
   }
@@ -98,7 +99,7 @@ function gameMain(gameDisplay) {
     this.x = x;
     this.y = y;
     this.speed = 1;
-    this.health = 100;
+    this.health = 200;
     this.spawnTime = 5000;
   }
 
@@ -107,12 +108,38 @@ function gameMain(gameDisplay) {
 
     var randomYtile = Math.floor((Math.random() * 10));
     var bug = new Bug(0, randomYtile * TILE_HEIGHT);
+    //var bug = new Bug(0, 0);
     bugArray.push(bug);
   }
 
   function moveBugs() {
     for (bug of bugArray) {
       bug.x += bug.speed;
+    }
+  }
+
+  //GAME DINAMICS
+
+  function detectCollisions(bullet) {
+
+    var bug;
+
+    if (bugArray) {
+
+      for (let i= 0; i < bugArray.length; i++) {
+
+        bug = bugArray[i];
+
+        if (bug.x + TILE_WIDTH >= bullet.x && bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
+          
+  
+          bug.health -= bullet.damage;
+  
+          if (bug.health <= 0) {
+            bugArray.splice(bugArray.indexOf(bug), 1);
+          }
+        }
+      }
     }
   }
 
