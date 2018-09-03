@@ -20,7 +20,7 @@ GameDisplay.prototype.mapConstructor = function() {
 }
 
 
-GameDisplay.prototype.paintMap = function(gunPosition, gunsArray, bugArray) {
+GameDisplay.prototype.paintMap = function(gunPosition, buildingPosition, gunsArray, buildingsArray, bugArray) {
 
   //TERRAIN
 
@@ -76,6 +76,28 @@ GameDisplay.prototype.paintMap = function(gunPosition, gunsArray, bugArray) {
     
   }
 
+  //BUILDING PREPOSITION 
+  if (buildingPosition) {
+
+    this.game.gameBoard.save();
+    this.game.gameBoard.fillStyle = "rgb(241, 204, 204)";
+    this.game.gameBoard.fillRect(buildingPosition.x * TILE_WIDTH, buildingPosition.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+    this.game.gameBoard.restore();
+    
+  }
+
+//BUILDINGS
+
+  if (buildingsArray) {
+    for (building of buildingsArray) {
+      
+      this.game.gameBoard.save();
+      this.game.gameBoard.fillStyle = "rgb(86, 87, 71)";
+      this.game.gameBoard.fillRect(building.x * TILE_WIDTH, building.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+      this.game.gameBoard.restore();
+    }
+
+  }
 
   //BUGS
   

@@ -16,3 +16,9 @@
   top: 30px;
   right: 20px;
 }
+
+.building {
+  position: absolute;
+  right: 10px;
+  top: 120px;
+}

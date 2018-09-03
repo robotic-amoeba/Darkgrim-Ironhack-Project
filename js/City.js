@@ -5,3 +5,5 @@ function City(game) {
   this.gunsArray = [];
   this.structuralPoints = 1000;
 }
+
+

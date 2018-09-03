@@ -7,6 +7,7 @@ function GameMain(canvas) {
 
   this.fps = 60;
   this.moneyTag;
+  this.buildingButton;
   this.newGame();
 
 }
@@ -64,7 +65,8 @@ GameMain.prototype.startClock = function () {
       }
     }
 
-    this.gameDisplay.paintMap(this.player.gunPosition, this.city.gunsArray, this.bugArray);
+    this.gameDisplay.paintMap(this.player.gunPosition, this.player.buildingPosition,
+                               this.city.gunsArray, this.city.buildingsArray, this.bugArray);
 
   }.bind(this), 1000 / this.fps)
 }
