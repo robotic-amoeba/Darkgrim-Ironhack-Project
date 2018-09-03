@@ -1,197 +1,84 @@
-window.onload = function() {
-  
-  var gameDisplay = new GameDisplay();
-  
-  mapConstructor();
-  gameMain(gameDisplay);
+
+
+function GameMain(canvas) {
+
+  this.canvas = document.getElementById(canvas);
+  this.gameBoard = this.canvas.getContext("2d");
+
+  this.fps = 60;
+  this.newGame();
   
 }
+GameMain.prototype.newGame = function(){
+  this.gameDisplay = new GameDisplay(this);
+  this.player = new Player(this);
+  this.bugArray = [];
+  this.bullets = [];
+}
 
-function gameMain(gameDisplay) {
-  
-  const TILE_WIDTH = 70; //70px
-  const TILE_HEIGHT = 70;
 
-  internalClock();
-  
-  function internalClock() {
-    setInterval(function(){
-      
-      
-      moveProjectiles();
-      moveBugs();
-      gameDisplay.paintMap(gunPosition, gunArray, bugArray);
-      
-    }, 40)
-  }
-  
-  //GUNs--------------------------------------------------------
-  
-  var gunArray = [];
-  var gunPosition;
-  
-  
-  function Railgun(x, y) { //x and y are tile numbers
-    this.x = x;
-    this.y = y;
-    this.bullets = [];
-    this.fireRate = 1000;
-    this.range = 5;
-  }
-  
-  
-  Railgun.prototype.shoot = function() { //generates new projectiles
-    var self = this;
+GameMain.prototype.startClock = function () {
+
+
+  this.clock = setInterval(function () {
     
-    setInterval(function() {
-      
-      var bullet = new Projectile(self.x * TILE_WIDTH, self.y * TILE_HEIGHT);
-      self.bullets.push(bullet);
-      
-    }, this.fireRate)  
-  }
-  
-  
-  function gunPositioning() {
 
-    gunPosition = {
-      x: 14,
-      y: 0
+    if (this.bugArray) {
+      for (bug of bugArray) {
+        bug.moveBugs();
+      }
     }
 
-    window.addEventListener("keydown", function choosePos(event) {  //<---------------------------------------
+    if (this.bullets) {
 
-      switch (event.code) {
-
-        case "ArrowDown":
-        if (gunPosition.y < 9) {
-          gunPosition.y += 1;
-        }
-        break;
-
-        case "ArrowUp":
-        if (gunPosition.y > 0) {
-          gunPosition.y -= 1;
-        }
-        break;
-
-        case "Enter":
-        let vacant = true;
-        for (gun of gunArray) {
-          if (gun.y == gunPosition.y) {
-            vacant = false;
-          }
-        } 
-        if (vacant) {
-          createGun(gunPosition.x, gunPosition.y);
-          gunPosition = {x: 14, y: 0};
-          window.removeEventListener("keydown", choosePos);
-          return;
-        }
+      for (bullet of this.bullets) {
+        this.moveProjectiles(bullet);
+        this.detectCollisions(bullet);
       }
-    })
+    }
 
-  }
+    this.gameDisplay.paintMap(this.player.gunPosition, this.player.gunArray, this.bugArray);
+
+  }.bind(this), 1000 / this.fps)
+}
 
 
-  function createGun(x, y) {
-    
-    var railGun = new Railgun(x, y);
-    
-    gunArray.push(railGun);
-    railGun.shoot();
-    spawnBug();                    //  <----------------------------
-  }
-  
-  var gunButton = document.getElementsByClassName("turret")[0];
-  gunButton.onclick = function() {  
-    gunPositioning();
-    return;
-    //var gun = createGun(14, gunArray.length);
-  }
-  
+GameMain.prototype.spawnBug = function () {
 
-  //PROJECTILES-------------------------------------------------------
-  
-  
-  function Projectile(x, y) {
-  
-    this.x = x;
-    this.y = y;
-    this.r = 3;
-    this.damage = 10;
-    this.speed = 30;
-  }
-  
-  function moveProjectiles() { //moves array of projectiles of each gun
-      
-    for (gun of gunArray) {
+  let randomYtile = Math.floor((Math.random() * 10));
+  let bug = new Bug(0, randomYtile * TILE_HEIGHT);
+  this.bugArray.push(bug);
+}
 
-      for (bullet of gun.bullets){
 
-        bullet.x -= bullet.speed;
-        detectCollisions(bullet);
+GameMain.prototype.moveProjectiles = function (bullet) { //moves array of projectiles of each gun
+
+  bullet.x -= bullet.speed;
+}
+
+
+GameMain.prototype.detectCollisions = function (bullet) {
+
+  let bug;
+
+  for (let i = 0; i < bugArray.length; i++) {
+
+    bug = bugArray[i];
+
+    if (bug.x + TILE_WIDTH >= bullet.x &&
+      bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
+
+      //gunArray.splice(gunArray.indexOf(bullet), 1);
+      bug.health -= bullet.damage;
+
+      if (bug.health <= 0) {
+        bugArray.splice(bugArray.indexOf(bug), 1);
       }
     }
   }
-
-  //BUGS
-
-  var bugArray = [];
-
-  function Bug(x, y) {
-
-    this.x = x;
-    this.y = y;
-    this.speed = 1;
-    this.health = 200;
-    this.spawnTime = 5000;
-  }
-
-
-  function spawnBug() {
-
-    var randomYtile = Math.floor((Math.random() * 10));
-    var bug = new Bug(0, randomYtile * TILE_HEIGHT);
-    //var bug = new Bug(0, 0);
-    bugArray.push(bug);
-  }
-
-  function moveBugs() {
-    for (bug of bugArray) {
-      bug.x += bug.speed;
-    }
-  }
-
-  //GAME DINAMICS
-
-  function detectCollisions(bullet) {
-
-    var bug;
-
-    if (bugArray) {
-
-      for (let i= 0; i < bugArray.length; i++) {
-
-        bug = bugArray[i];
-
-        if (bug.x + TILE_WIDTH >= bullet.x && 
-            bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
-          
-
-  
-          bug.health -= bullet.damage;
-  
-          if (bug.health <= 0) {
-            bugArray.splice(bugArray.indexOf(bug), 1);
-          }
-        }
-      }
-    }
-  }
-
 
 }
+
 
 
 
