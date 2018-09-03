@@ -8,7 +8,7 @@ window.onload = function () {
   var gunButton = document.getElementsByClassName("turret")[0];
 
   gunButton.onclick = function () {
-    game.player.gunPositioning();
+    game.player.gunPositioning(gunButton);
     return;
   }
 

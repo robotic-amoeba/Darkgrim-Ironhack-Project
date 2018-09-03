@@ -6,13 +6,13 @@ function Bug(game, x, y) {
   this.game = game;
   this.x = x;
   this.y = y;
-  this.speed = 2;
-  this.health = 200;
-  this.spawnTime = 5000;
+  this.speed = 0.5;
+  this.health = 100;
+  this.spawnTime = 240;
 }
 
 
-Bug.prototype.moveBug = function() {
+Bug.prototype.moveBug = function(bug) {
 
     bug.x += bug.speed;
 }

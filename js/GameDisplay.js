@@ -45,15 +45,15 @@ GameDisplay.prototype.paintMap = function(gunPosition, gunArray, bugArray) {
   //GUNS
   
   if (gunArray) {
-    
     for (gun of gunArray) {
       
       this.game.gameBoard.save();
       this.game.gameBoard.fillStyle = "rgb(86, 87, 71)";
       this.game.gameBoard.fillRect(gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
       this.game.gameBoard.restore();
+  
       
-      for (bullet of gun.bullets) {
+      for (bullet of this.game.bullets) {
         
         this.game.gameBoard.save();
         this.game.gameBoard.beginPath();
@@ -67,7 +67,6 @@ GameDisplay.prototype.paintMap = function(gunPosition, gunArray, bugArray) {
   }
   
   //GUN PREPOSITION 
-
   if (gunPosition) {
 
     this.game.gameBoard.save();
