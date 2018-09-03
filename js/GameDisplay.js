@@ -20,7 +20,7 @@ GameDisplay.prototype.mapConstructor = function() {
 }
 
 
-GameDisplay.prototype.paintMap = function(gunPosition, gunArray, bugArray) {
+GameDisplay.prototype.paintMap = function(gunPosition, gunsArray, bugArray) {
 
   //TERRAIN
 
@@ -44,8 +44,8 @@ GameDisplay.prototype.paintMap = function(gunPosition, gunArray, bugArray) {
   
   //GUNS
   
-  if (gunArray) {
-    for (gun of gunArray) {
+  if (gunsArray) {
+    for (gun of gunsArray) {
       
       this.game.gameBoard.save();
       this.game.gameBoard.fillStyle = "rgb(86, 87, 71)";
@@ -92,7 +92,12 @@ GameDisplay.prototype.paintMap = function(gunPosition, gunArray, bugArray) {
     
 
 }
-    
+  
+GameDisplay.prototype.displayStatus = function() {
+  this.game.moneyTag.innerHTML = "$" + this.game.player.money;
+
+}
+
 const TILE_WIDTH = 70; //70px
 const TILE_HEIGHT = 70; 
 

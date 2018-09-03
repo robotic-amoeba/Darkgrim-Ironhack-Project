@@ -5,7 +5,7 @@
   this.y = y;
   this.r = 3;
   this.damage = 10;
-  this.speed = 30;
+  this.speed = 40;
 }
   
   

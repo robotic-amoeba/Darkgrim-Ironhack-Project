@@ -5,7 +5,10 @@ window.onload = function () {
  
   game.startClock();
 
-  var gunButton = document.getElementsByClassName("turret")[0];
+  let gunButton = document.getElementsByClassName("turret")[0];
+  let moneyTag = document.getElementById("money");
+  game.moneyTag = moneyTag;
+
 
   gunButton.onclick = function () {
     game.player.gunPositioning(gunButton);

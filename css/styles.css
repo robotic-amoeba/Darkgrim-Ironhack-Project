@@ -8,5 +8,11 @@
 .turret {
   position: absolute;
   right: 10px;
+  top: 60px;
+}
+
+#money {
+  position: absolute;
   top: 30px;
+  right: 20px;
 }

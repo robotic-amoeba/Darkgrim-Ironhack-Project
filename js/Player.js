@@ -2,9 +2,8 @@
 function Player(game) {
   this.game = game;
   this.points = 0;
-  this.money = 0;
-  this.gunArray = [];
-  this.gunPosition = {}
+  this.money = 200;
+  this.gunPosition = {};
 }
 
 
@@ -12,7 +11,8 @@ function Player(game) {
 Player.prototype.createGun = function (x, y) {
   
   let gun = new Gun(this.game, x, y);
-  this.gunArray.push(gun);
+  this.game.city.gunsArray.push(gun);
+  this.money -= 25;
 }
 
 
@@ -39,7 +39,7 @@ Player.prototype.gunPositioning = function (gunButton) {
 
       case "Space": {
         let vacant = true;
-        for (gun of this.gunArray) {
+        for (gun of this.game.city.gunsArray) {
           if (gun.y == this.gunPosition.y) {
             vacant = false;
           }
