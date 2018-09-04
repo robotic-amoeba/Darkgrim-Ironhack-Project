@@ -7,6 +7,7 @@
   this.damage = 10;
   this.speed = 40;
 }
+
   
   
 

@@ -13,11 +13,11 @@ window.onload = function () {
   
 
   gunButton.onclick = function () {
-    game.player.gunPositioning(gunButton);
+    game.player.placeSelector(gunButton, "gun");
   }
 
   buildingButton.onclick = function() {
-    game.player.buildingPositioning(buildingButton);
+    game.player.placeSelector(buildingButton, "building");
   }
 
 }

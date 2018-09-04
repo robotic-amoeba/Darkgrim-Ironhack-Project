@@ -73,8 +73,8 @@ GameMain.prototype.startClock = function () {
       this.eraseBullets();
     }
 
-    this.gameDisplay.paintMap(this.player.gunPosition, this.player.buildingPosition,
-                               this.city.gunsArray, this.city.buildingsArray, this.bugsArray);
+    this.gameDisplay.paintMap(this.player.tileSelector, this.city.gunsArray,
+                               this.city.buildingsArray, this.bugsArray);
 
   }.bind(this), 1000 / this.fps)
 }
@@ -95,8 +95,6 @@ GameMain.prototype.moveProjectiles = function (bullet) { //moves array of projec
 
 
 GameMain.prototype.eraseBullets = function() {
-
-  if (this.bullets.length > 0) {console.log(this.bullets)}
   
   this.bullets = this.bullets.filter (bullet => bullet.x > -10)
 }
