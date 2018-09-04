@@ -10,10 +10,16 @@ function Player(game) {
 
 
 Player.prototype.createGun = function (game, x, y) {
+  if (this.money >= this.game.city.gunPrice) {
 
-  let gun = new Gun(this.game, x, y);
-  this.game.city.gunsArray.push(gun);
-  this.money -= 25;
+    let gun = new Gun(this.game, x, y);
+    this.game.city.gunsArray.push(gun);
+    this.money -= 25;
+
+  } else {
+    
+    console.log("Not enough money");
+  }
 }
 
 
@@ -47,10 +53,10 @@ Player.prototype.gunPositioning = function (gunButton) {
         }
         if (vacant) {
           this.createGun(this.game, this.gunPosition.x, this.gunPosition.y);
-          this.gunPosition = {};
         }
         window.removeEventListener("keydown", choosePos);
         gunButton.disabled = false;
+        this.gunPosition = {};
         break;
       }
     }
@@ -59,6 +65,23 @@ Player.prototype.gunPositioning = function (gunButton) {
   window.addEventListener("keydown", choosePos)
 
 }
+
+
+
+Player.prototype.createBuilding = function () {
+
+  if (this.money >= this.game.city.buildPrice) {
+
+    let building = new Building(this.game, this.buildingPosition.x, this.buildingPosition.y);
+    this.game.city.buildingsArray.push(building);
+    this.money -= this.game.city.buildPrice;
+
+  } else {
+
+    console.log("Not enogh money");
+  }
+}
+
 
 
 Player.prototype.buildingPositioning = function (buildingButton) {
@@ -92,20 +115,20 @@ Player.prototype.buildingPositioning = function (buildingButton) {
           this.buildingPosition.x += 1;
         }
         break;
-
+        
       case "Space": {
         let vacant = true;
         for (building of this.game.city.buildingsArray) {
-          if (building.y == this.buildingPosition.y && building.x == this.buildingPosition.y) {
+          if (building.y == this.buildingPosition.y && building.x == this.buildingPosition.x) {
             vacant = false;
           }
         }
         if (vacant) {
           this.createBuilding(this.game, this.buildingPosition.x, this.buildingPosition.y);
-          this.buildingPosition = {};
         }
         window.removeEventListener("keydown", choosePos);
         buildingButton.disabled = false;
+        this.buildingPosition = {};        
         break;
       }
     }
@@ -117,10 +140,4 @@ Player.prototype.buildingPositioning = function (buildingButton) {
 
 
 
-Player.prototype.createBuilding = function () {
-  console.log("BUILD")
-  let building = new Building(this.game, this.buildingPosition.x, this.buildingPosition.y);
-  this.game.city.buildingsArray.push(building);
-  this.money -= 50;
-}
 

@@ -1,5 +1,4 @@
 
-var bugArray = [];
 
 function Bug(game, x, y) {
 

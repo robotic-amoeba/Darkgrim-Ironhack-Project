@@ -4,6 +4,8 @@ function City(game) {
   this.buildingsArray = [];
   this.gunsArray = [];
   this.structuralPoints = 1000;
+  this.buildPrice = 50;
+  this.gunPrice = 25;
 }
 
 

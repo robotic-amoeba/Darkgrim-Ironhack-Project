@@ -17,7 +17,7 @@ GameMain.prototype.newGame = function () {
   this.gameDisplay = new GameDisplay(this);
   this.player = new Player(this);
   this.city = new City(this);
-  this.bugArray = [];
+  this.bugsArray = [];
   this.bullets = [];
 }
 
@@ -39,9 +39,15 @@ GameMain.prototype.startClock = function () {
       this.spawnBug();
     }
 
+    if (clock % 30 === 0 && this.city.buildingsArray) {
+      for (let building of this.city.buildingsArray) {
+        building.generateProfit(building);
+      }
+    }
 
-    if (this.bugArray) {
-      for (let bug of this.bugArray) {
+
+    if (this.bugsArray) {
+      for (let bug of this.bugsArray) {
         if (bug.x >= 13 * TILE_WIDTH) {
           bug.attack();
         } else {
@@ -63,10 +69,12 @@ GameMain.prototype.startClock = function () {
         this.moveProjectiles(bullet);
         this.detectCollisions(bullet);
       }
+
+      this.eraseBullets();
     }
 
     this.gameDisplay.paintMap(this.player.gunPosition, this.player.buildingPosition,
-                               this.city.gunsArray, this.city.buildingsArray, this.bugArray);
+                               this.city.gunsArray, this.city.buildingsArray, this.bugsArray);
 
   }.bind(this), 1000 / this.fps)
 }
@@ -76,7 +84,7 @@ GameMain.prototype.spawnBug = function () {
 
   let randomYtile = Math.floor((Math.random() * 10));
   let bug = new Bug(this, 0, randomYtile * TILE_HEIGHT);
-  this.bugArray.push(bug);
+  this.bugsArray.push(bug);
 }
 
 
@@ -86,13 +94,21 @@ GameMain.prototype.moveProjectiles = function (bullet) { //moves array of projec
 }
 
 
+GameMain.prototype.eraseBullets = function() {
+
+  if (this.bullets.length > 0) {console.log(this.bullets)}
+  
+  this.bullets = this.bullets.filter (bullet => bullet.x > -10)
+}
+
+
 GameMain.prototype.detectCollisions = function (bullet) {
 
   let bug;
 
-  for (let i = 0; i < this.bugArray.length; i++) {
+  for (let i = 0; i < this.bugsArray.length; i++) {
 
-    bug = this.bugArray[i];
+    bug = this.bugsArray[i];
 
     if (bug.x + TILE_WIDTH >= bullet.x &&
       bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
@@ -100,7 +116,7 @@ GameMain.prototype.detectCollisions = function (bullet) {
       bug.health -= bullet.damage;
       this.bullets.splice(this.bullets.indexOf(bullet), 1);
       if (bug.health <= 0) {
-        this.bugArray.splice(this.bugArray.indexOf(bug), 1);
+        this.bugsArray.splice(this.bugsArray.indexOf(bug), 1);
       }
     }
   }
