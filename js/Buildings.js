@@ -9,5 +9,4 @@ function Building(game, x, y) {
 
 Building.prototype.generateProfit = function(building) {
   this.game.player.money += building.profit;
-    console.log("money")
 }

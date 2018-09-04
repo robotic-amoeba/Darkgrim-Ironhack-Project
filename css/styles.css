@@ -5,20 +5,33 @@
   left: 5px;
 }
 
-.turret {
+.gun {
   position: absolute;
   right: 10px;
   top: 60px;
+}
+
+.building {
+  position: absolute;
+  right: 10px;
+  top: 240px;
+}
+
+.laser {
+  position: absolute;
+  right: 10px;
+  top: 120px;
+
+}
+
+.up {
+  position: absolute;
+  right: 10px;
+  top: 180px;
 }
 
 #money {
   position: absolute;
   top: 30px;
   right: 20px;
-}
-
-.building {
-  position: absolute;
-  right: 10px;
-  top: 120px;
 }

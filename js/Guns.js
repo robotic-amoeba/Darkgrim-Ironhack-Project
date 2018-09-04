@@ -6,22 +6,22 @@ function Gun(game ,x, y) { //x and y are tile numbers
   this.y = y;
   this.fireRate = 60;
   this.range = 5;
+
 }
 
 
 Gun.prototype.shoot = function() {
-
+  let bullet;
   if (this.type === "gun") {
 
-    let bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT);
-    this.game.bullets.push(bullet);
+     bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, 10);
 
   } else if (this.type === "laser") {
     
-    let bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT);
-    this.game.bullets.push(bullet);
-
+     bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, 20);
+    
   }
+  this.game.bullets.push(bullet);
   
 }
 

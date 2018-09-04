@@ -4,7 +4,6 @@ function GameMain(canvas) {
 
   this.canvas = document.getElementById(canvas);
   this.gameBoard = this.canvas.getContext("2d");
-
   this.fps = 60;
   this.moneyTag;
   this.buildingButton;
@@ -56,9 +55,9 @@ GameMain.prototype.startClock = function () {
 
       }
       if (this.city.gunsArray) {
-        for (let gun of this.city.gunsArray) {
-          if (clock % gun.fireRate === 0)
-            gun.shoot();
+        for (let weapon of this.city.gunsArray) {
+          if (clock % weapon.fireRate === 0)
+            weapon.shoot();
         }
       }
     }

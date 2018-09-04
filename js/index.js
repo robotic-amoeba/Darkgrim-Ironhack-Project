@@ -5,19 +5,25 @@ window.onload = function () {
  
   game.startClock();
 
-  let gunButton = document.getElementsByClassName("turret")[0];
   let moneyTag = document.getElementById("money");
+  let gunButton = document.getElementsByClassName("gun")[0];
+  let laserButton = document.getElementsByClassName("laser")[0];
   let buildingButton = document.getElementsByClassName("building")[0];
+  let buttons = document.getElementsByClassName("button");
   
   game.moneyTag = moneyTag;
   
 
   gunButton.onclick = function () {
-    game.player.placeSelector(gunButton, "gun");
+    game.player.placeSelector(buttons, "gun");
   }
 
   buildingButton.onclick = function() {
-    game.player.placeSelector(buildingButton, "building");
+    game.player.placeSelector(buttons, "building");
+  }
+
+  laserButton.onclick = function() {
+    game.player.placeSelector(buttons, "laser")
   }
 
 }

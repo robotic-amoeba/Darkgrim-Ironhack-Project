@@ -11,17 +11,29 @@ function Player(game) {
 Player.prototype.createGun = function (game, x, y) {
   if (this.money >= this.game.city.gunPrice) {
 
-    let gun = new Gun(this.game, x, y);
+    let gun = new Gun(game, x, y);
     this.game.city.gunsArray.push(gun);
-    this.money -= 25;
+    this.money -= this.game.city.gunPrice;
+
+  } else {
+
+    console.log("Not enough money")
+  }
+}
+
+
+Player.prototype.createLaser = function (game, x, y) {
+  if (this.money >= this.game.city.laserPrice) {
+
+    let laser = new Laser(game, x, y);
+    this.game.city.gunsArray.push(laser);
+    this.money -= this.game.city.laserPrice;
 
   } else {
 
     console.log("Not enough money");
   }
 }
-
-
 
 Player.prototype.createBuilding = function () {
 
@@ -39,59 +51,60 @@ Player.prototype.createBuilding = function () {
 
 
 
-Player.prototype.placeSelector = function (button, elementToBuild) {
+Player.prototype.placeSelector = function (buttons, elementToBuild) {
 
-  button.disabled = true;
-  if (elementToBuild === "gun") {
+  for (let button of buttons) {
+    button.disabled = true;
+  }
+  if (elementToBuild === ("gun" || "laser")) {
     this.tileSelector = { x: 14, y: 0 }
   } else if (elementToBuild === "building") {
     this.tileSelector = { x: 15, y: 0 }
   }
-
+  
   const choosePos = event => {
-
+    
     switch (event.code) {
-
+      
       case "ArrowDown":
-        if (this.tileSelector.y < 9) {
-          this.tileSelector.y += 1;
-          console.log("down");
-        }
-        break;
-
+      if (this.tileSelector.y < 9) {
+        this.tileSelector.y += 1;
+      }
+      break;
+      
       case "ArrowUp":
-        if (this.tileSelector.y > 0) {
-          this.tileSelector.y -= 1;
-          console.log("up")
-        }
-        break;
-
+      if (this.tileSelector.y > 0) {
+        this.tileSelector.y -= 1;
+      }
+      break;
+      
       case "ArrowLeft":
-        if (elementToBuild === "building" && this.tileSelector.x > 15) {
+        if (elementToBuild === ("building") && this.tileSelector.x > 15) {
           this.tileSelector.x -= 1;
         }
         break;
-
-      case "ArrowRight":
-        if (elementToBuild === "building" && this.tileSelector.x < 19) {
+        
+        case "ArrowRight":
+        if (elementToBuild === ("building") && this.tileSelector.x < 19) {
           this.tileSelector.x += 1;
         }
         break;
-
-      case "Space":
-
+        
+        case "Space":
+        
         let vacant = true;
-
-        if (elementToBuild === "gun") {
-          for (gun of this.game.city.gunsArray) {
-            if (gun.y == this.tileSelector.y) {
+      
+        if (elementToBuild === ("gun" || "laser")) {
+          for (weapon of this.game.city.gunsArray) {
+            if (weapon.y == this.tileSelector.y) {
               vacant = false;
             }
           }
-          if (vacant) {
+          if (vacant && elementToBuild === "gun") {
             this.createGun(this.game, this.tileSelector.x, this.tileSelector.y);
-
-            console.log("entra")
+            
+          } else if (vacant && elementToBuild === "laser") {
+            this.createLaser(this.game, this.tileSelector.x, this.tileSelector.y);
           }
         } else if (elementToBuild === "building") {
           for (building of this.game.city.buildingsArray) {
@@ -101,13 +114,17 @@ Player.prototype.placeSelector = function (button, elementToBuild) {
           }
           if (vacant) {
             this.createBuilding(this.game, this.tileSelector.x, this.tileSelector.y);
-          }
+            
+          } 
+          
         }
         this.tileSelector = {};
+        for (let button of buttons) {
+          button.disabled = false;
+        }
         window.removeEventListener("keydown", choosePos);
-        button.disabled = false;
         break;
-
+        
     }
   }
   window.addEventListener("keydown", choosePos)
