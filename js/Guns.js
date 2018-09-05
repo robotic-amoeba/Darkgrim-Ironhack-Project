@@ -18,7 +18,7 @@ Gun.prototype.shoot = function() {
 
   } else if (this.type === "laser") {
     
-     bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, 20);
+     bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, 30);
     
   }
   this.game.bullets.push(bullet);
@@ -28,7 +28,7 @@ Gun.prototype.shoot = function() {
 function Laser(game, x, y) {
   Gun.call(this, game, x, y);
   this.type = "laser"
-  this.fireRate = 30;
+  this.fireRate = 140;
 }
 
 Laser.prototype = Object.create(Gun.prototype);

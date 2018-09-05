@@ -23,38 +23,39 @@ GameMain.prototype.newGame = function () {
 
 GameMain.prototype.startClock = function () {
 
-  let clock = 0
+  let seconds;
+  seconds = this.clock / 60;
 
   this.clock = setInterval(function () {
 
-    clock++;
+    this.clock++;
 
-    if (clock % 30 === 0) {
+    if (this.clock % 30 === 0) {
       this.player.money += 1;
+      if (this.city.buildingsArray) {
+        for (let building of this.city.buildingsArray) {
+          building.generateProfit(building);
+        }
+      }
       this.gameDisplay.displayStatus();
     }
 
-    if (clock % 300 === 0) {
+    if ( this.clock > 60 && this.clock % 300 === 0) {
       this.spawnBug();
     }
 
-    if (clock % 30 === 0 && this.city.buildingsArray) {
-      for (let building of this.city.buildingsArray) {
-        building.generateProfit(building);
-      }
-    }
 
     if (this.bugsArray) {
       for (let bug of this.bugsArray) {
         if (bug.x >= 13 * TILE_WIDTH) {
           bug.attack();
         } else {
-          bug.moveBug(bug);
+          bug.moveBug();
         }
       }
       if (this.city.gunsArray) {
         for (let weapon of this.city.gunsArray) {
-          if (clock % weapon.fireRate === 0)
+          if (this.clock % weapon.fireRate === 0)
             weapon.shoot();
         }
       }
@@ -69,7 +70,7 @@ GameMain.prototype.startClock = function () {
     }
 
     this.gameDisplay.paintMap(this.player.tileSelector, this.city.gunsArray,
-                               this.city.buildingsArray, this.bugsArray);
+      this.city.buildingsArray, this.bugsArray);
 
   }.bind(this), 1000 / this.fps)
 }
@@ -78,8 +79,15 @@ GameMain.prototype.startClock = function () {
 GameMain.prototype.spawnBug = function () {
 
   let randomYtile = Math.floor((Math.random() * 10));
-  let bug = new Bug(this, 0, randomYtile * TILE_HEIGHT);
-  this.bugsArray.push(bug);
+
+  if (this.clock % 2400 === 0) {
+    let carniBug = new CarniBug(this, 0, randomYtile * TILE_HEIGHT);
+    this.bugsArray.push(carniBug);
+  } else {
+    let bug = new Bug(this, 0, randomYtile * TILE_HEIGHT);
+    this.bugsArray.push(bug);
+  }
+  console.log(this.bugsArray);
 }
 
 
@@ -89,9 +97,9 @@ GameMain.prototype.moveProjectiles = function (bullet) { //moves array of projec
 }
 
 
-GameMain.prototype.eraseBullets = function() {
-  
-  this.bullets = this.bullets.filter (bullet => bullet.x > -10)
+GameMain.prototype.eraseBullets = function () {
+
+  this.bullets = this.bullets.filter(bullet => bullet.x > -10)
 }
 
 
