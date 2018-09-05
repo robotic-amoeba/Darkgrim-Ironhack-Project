@@ -12,8 +12,6 @@ GameDisplay.prototype.mapConstructor = function () {
 
     for (let j = 0; j < 20; j++) {
       this.map.push([j, i]);
-      /* map[j][].push(j);  
-      map[j].push(i); */
     }
   }
 
@@ -22,25 +20,27 @@ GameDisplay.prototype.mapConstructor = function () {
 
 GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArray, bugsArray) {
 
-  let gradient;
+
   //TERRAIN
 
-  this.game.gameBoard.save();
-  this.game.gameBoard.fillStyle = "rgb(125, 128, 70)";
-
+  let background = new Image();
+  background.src = "./img/Grass-ground.png";
   for (elm of this.map) { //all map
-    this.game.gameBoard.fillRect(elm[0] * TILE_WIDTH, elm[1] * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+    this.game.gameBoard.drawImage(background, elm[0] * TILE_WIDTH, elm[1] * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
   }
 
-  this.game.gameBoard.restore();
 
 
   //WALL
 
-  this.game.gameBoard.save();
-  this.game.gameBoard.fillStyle = "rgb(70, 60, 60)";
-  this.game.gameBoard.fillRect(14 * TILE_WIDTH, 0, TILE_WIDTH, 10 * TILE_HEIGHT);
-  this.game.gameBoard.restore();
+  let wallImage = new Image();
+  wallImage.src = "./img/wall.png";
+  for (let i = 0; i < 14; i++) {
+    this.game.gameBoard.drawImage(wallImage, 14 * TILE_WIDTH, i * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+  }
+
+
+
 
   //BUILDINGS
 
