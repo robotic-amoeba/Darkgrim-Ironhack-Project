@@ -52,7 +52,6 @@ GameMain.prototype.startClock = function () {
         } else {
           bug.moveBug(bug);
         }
-
       }
       if (this.city.gunsArray) {
         for (let weapon of this.city.gunsArray) {
@@ -65,7 +64,7 @@ GameMain.prototype.startClock = function () {
     if (this.bullets) {
 
       for (bullet of this.bullets) {
-        this.moveProjectiles(bullet);
+        bullet.moveProjectile();
         this.detectCollisions(bullet);
       }
 

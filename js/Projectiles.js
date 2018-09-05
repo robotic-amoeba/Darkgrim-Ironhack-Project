@@ -11,9 +11,9 @@
 
 
 
-Projectile.prototype.move = function () { //moves array of projectiles of each gun
+Projectile.prototype.moveProjectile = function () { //moves array of projectiles of each gun
 
-  bullet.x -= bullet.speed;
+  this.x -= this.speed;
 }
 
   

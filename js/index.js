@@ -9,12 +9,13 @@ window.onload = function () {
   let gunButton = document.getElementsByClassName("gun")[0];
   let laserButton = document.getElementsByClassName("laser")[0];
   let buildingButton = document.getElementsByClassName("building")[0];
+  let upgradeButton = document.getElementsByClassName("up")[0];
   let buttons = document.getElementsByClassName("button");
   
   game.moneyTag = moneyTag;
   
 
-  gunButton.onclick = function () {
+  gunButton.onclick = function() {
     game.player.placeSelector(buttons, "gun");
   }
 
@@ -24,6 +25,10 @@ window.onload = function () {
 
   laserButton.onclick = function() {
     game.player.placeSelector(buttons, "laser")
+  }
+
+  upgradeButton.onclick = function() {
+    game.player.placeSelector(buttons, "upgrade")
   }
 
 }
