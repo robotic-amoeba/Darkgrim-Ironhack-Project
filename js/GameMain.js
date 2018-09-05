@@ -44,7 +44,6 @@ GameMain.prototype.startClock = function () {
       }
     }
 
-
     if (this.bugsArray) {
       for (let bug of this.bugsArray) {
         if (bug.x >= 13 * TILE_WIDTH) {
@@ -62,12 +61,10 @@ GameMain.prototype.startClock = function () {
     }
 
     if (this.bullets) {
-
       for (bullet of this.bullets) {
         bullet.moveProjectile();
         this.detectCollisions(bullet);
       }
-
       this.eraseBullets();
     }
 
@@ -103,12 +100,9 @@ GameMain.prototype.detectCollisions = function (bullet) {
   let bug;
 
   for (let i = 0; i < this.bugsArray.length; i++) {
-
     bug = this.bugsArray[i];
-
     if (bug.x + TILE_WIDTH >= bullet.x &&
       bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
-
       bug.health -= bullet.damage;
       this.bullets.splice(this.bullets.indexOf(bullet), 1);
       if (bug.health <= 0) {

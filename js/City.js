@@ -7,6 +7,7 @@ function City(game) {
   this.buildPrice = 50;
   this.gunPrice = 25;
   this.laserPrice = 50;
+  this.upgradeGunPrice = 35;
 }
 
 
