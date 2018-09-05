@@ -3,12 +3,12 @@ function GameDisplay(game) {
   this.game = game;
   this.map = [];
   this.mapConstructor();
-  
+
 }
 
 
 
-GameDisplay.prototype.mapConstructor = function() {
+GameDisplay.prototype.mapConstructor = function () {
 
   for (let i = 0; i < 10; i++) {
 
@@ -21,13 +21,22 @@ GameDisplay.prototype.mapConstructor = function() {
 
 
 let background = new Image();
-background.src = "./img/Grass-ground.png";
+background.src = "./img/dirt-background.png";
 
 let wallImage = new Image();
 wallImage.src = "./img/wall.png";
 
+let siloImage = new Image();
+siloImage.src = "./img/silo.png"
+
 let laserImage = new Image();
 laserImage.src = "./img/laser.png";
+
+let laserGunImage = new Image();
+laserGunImage.src = "./img/laserGun.png";
+
+let gunImage = new Image();
+gunImage.src = "./img/gun.png"
 
 let bugFrame1 = new Image();
 let bugFrame2 = new Image();
@@ -37,6 +46,15 @@ bugFrame1.src = "./img/bugFrame1.png";
 bugFrame2.src = "./img/bugFrame2.png";
 bugFrame3.src = "./img/bugFrame3.png";
 
+let carnibugFrame1 = new Image();
+let carnibugFrame2 = new Image();
+let carnibugFrame3 = new Image();
+
+carnibugFrame1.src = "./img/carnibugFrame1.png";
+carnibugFrame2.src = "./img/carnibugFrame2.png";
+carnibugFrame3.src = "./img/carnibugFrame3.png";
+
+
 
 
 GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArray, bugsArray) {
@@ -45,6 +63,10 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
 
   for (elm of this.map) { //all map
     this.game.gameBoard.drawImage(background, elm[0] * TILE_WIDTH, elm[1] * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+  }
+
+  for (let i = 0; i < 14; i++) {
+    this.game.gameBoard.drawImage(wallImage, 14 * TILE_WIDTH, i * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
   }
 
   //WALL
@@ -57,11 +79,7 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
 
   if (buildingsArray) {
     for (building of buildingsArray) {
-
-      this.game.gameBoard.save();
-      this.game.gameBoard.fillStyle = "rgb(86, 87, 71)";
-      this.game.gameBoard.fillRect(building.x * TILE_WIDTH, building.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
-      this.game.gameBoard.restore();
+      this.game.gameBoard.drawImage(siloImage, building.x * TILE_WIDTH, building.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
     }
 
   }
@@ -71,38 +89,39 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
   if (gunsArray) {
 
     for (gun of gunsArray) {
+      if (gun.type === "gun") {
 
-      this.game.gameBoard.save();
-      this.game.gameBoard.fillStyle = "rgb(86, 87, 71)";
-      this.game.gameBoard.fillRect(gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
-      this.game.gameBoard.restore();
+        this.game.gameBoard.drawImage(gunImage, gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+
+      } else if (gun.type == "laser")
+
+        this.game.gameBoard.drawImage(laserGunImage, gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 
     }
-    
+
     //PROJECTILES    
 
     for (bullet of this.game.bullets) {
 
-        if (gun.type === "gun") {
+      if (bullet.type === "bullet") {
 
-          this.game.gameBoard.save();
-          this.game.gameBoard.beginPath();
-          this.game.gameBoard.fillStyle = "rgb(0, 0, 0)";
-          this.game.gameBoard.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
-          this.game.gameBoard.fill();
-          this.game.gameBoard.closePath();
-          this.game.gameBoard.restore();
+        this.game.gameBoard.save();
+        this.game.gameBoard.beginPath();
+        this.game.gameBoard.fillStyle = "rgb(0, 0, 0)";
+        this.game.gameBoard.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
+        this.game.gameBoard.fill();
+        this.game.gameBoard.closePath();
+        this.game.gameBoard.restore();
 
-        } else if (gun.type === "laser") {
+      } else if (bullet.type === "laserbeam") {
 
-         // this.game.gameBoard.drawImage(bugFrame1, 0, gun.y + 25, gun.x, gun.y +10);
-
-
+        this.game.gameBoard.drawImage(laserImage, 0, bullet.y + 33, 988, 5);
       }
     }
   }
 
   //POSITION SELECTOR 
+
   if (tileSelector) {
 
     this.game.gameBoard.save();
@@ -129,10 +148,13 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
 
       } else {
 
-        this.game.gameBoard.save();
-        this.game.gameBoard.fillStyle = "rgb(179, 227, 64)";
-        this.game.gameBoard.fillRect(bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
-        this.game.gameBoard.restore();
+        if (bug.frame === 1) {
+          this.game.gameBoard.drawImage(carnibugFrame1, bug.x - 40, bug.y, 117, 76);
+        } else if (bug.frame === 2) {
+          this.game.gameBoard.drawImage(carnibugFrame2, bug.x - 40, bug.y, 117, 76);
+        } else {
+          this.game.gameBoard.drawImage(carnibugFrame3, bug.x - 40, bug.y, 117, 76);
+        }
       }
 
       //life bar
@@ -146,13 +168,10 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
 
     }
   }
-
-
 }
 
 GameDisplay.prototype.displayStatus = function () {
   this.game.moneyTag.innerHTML = "$" + this.game.player.money;
-
 }
 
 const TILE_WIDTH = 70; //70px

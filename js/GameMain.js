@@ -113,10 +113,12 @@ GameMain.prototype.detectCollisions = function (bullet) {
     if (bug.x + TILE_WIDTH >= bullet.x &&
       bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
       bug.health -= bullet.damage;
-      console.log(bullet)
-      this.bullets.splice(this.bullets.indexOf(bullet), 1);
       if (bug.health <= 0) {
         this.bugsArray.splice(this.bugsArray.indexOf(bug), 1);
+      }
+      if (bullet.type === "bullet") {
+        this.bullets.splice(this.bullets.indexOf(bullet), 1);
+
       }
     }
   }

@@ -7,7 +7,6 @@
   this.r = 3;
   this.speed = 40;
   this.damage = 10;
-
 }
 
 function LaserBeam(game, x, y) {
@@ -15,7 +14,7 @@ function LaserBeam(game, x, y) {
   Projectile.call(this, game, x, y);
   this.type = "laserbeam";
   this.speed = 30;
-  this.damage = 30;
+  this.damage = 5;
 }
 
 
