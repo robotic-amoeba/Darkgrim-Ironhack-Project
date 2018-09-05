@@ -51,6 +51,8 @@ GameMain.prototype.startClock = function () {
           bug.attack();
         } else {
           bug.moveBug();
+          bug.moveFrame();
+
         }
       }
       if (this.city.gunsArray) {
@@ -87,7 +89,6 @@ GameMain.prototype.spawnBug = function () {
     let bug = new Bug(this, 0, randomYtile * TILE_HEIGHT);
     this.bugsArray.push(bug);
   }
-  console.log(this.bugsArray);
 }
 
 
@@ -112,6 +113,7 @@ GameMain.prototype.detectCollisions = function (bullet) {
     if (bug.x + TILE_WIDTH >= bullet.x &&
       bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
       bug.health -= bullet.damage;
+      console.log(bullet)
       this.bullets.splice(this.bullets.indexOf(bullet), 1);
       if (bug.health <= 0) {
         this.bugsArray.splice(this.bugsArray.indexOf(bug), 1);

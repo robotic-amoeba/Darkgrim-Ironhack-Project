@@ -1,5 +1,5 @@
 
-function Gun(game ,x, y) { //x and y are tile numbers
+function Gun(game, x, y) { //x and y are tile numbers
   this.game = game;
   this.type = "gun";
   this.x = x;
@@ -10,19 +10,19 @@ function Gun(game ,x, y) { //x and y are tile numbers
 }
 
 
-Gun.prototype.shoot = function() {
+Gun.prototype.shoot = function () {
   let bullet;
   if (this.type === "gun") {
 
-     bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, 10);
+    bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT);
 
   } else if (this.type === "laser") {
-    
-     bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, 30);
+
+    bullet = new LaserBeam(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT);
     
   }
   this.game.bullets.push(bullet);
-  
+
 }
 
 function Laser(game, x, y) {

@@ -8,8 +8,10 @@ function Bug(game, x, y) {
   this.y = y;
   this.speed = 2;
   this.health = 100;
+  this.fixedHealth = 100;
   this.damage = 1;
   this.spawnTime = 250;
+  this.frame = Math.floor(Math.random(4));
 }
 
 function CarniBug(game, x, y) {
@@ -17,6 +19,7 @@ function CarniBug(game, x, y) {
   Bug.call(this, game, x, y);
   this.brood = "carnibug"
   this.health = 400;
+  this.fixedHealth = 400;
   this.speed = 0.5;
   this.damage = 2;
   this.spawnTime = 500;
@@ -34,5 +37,14 @@ Bug.prototype.attack = function () {
   this.game.city.structuralPoints -= this.damage;
   if (this.game.city.structuralPoints <= 0) {
     //alert("THE CITY HAS FALLEN")
+  }
+}
+
+Bug.prototype.moveFrame = function() {
+  if (this.game.clock % 10 === 0) {
+    this.frame += 1
+    if (this.frame > 3) {
+      this.frame = 1
+    }
   }
 }
