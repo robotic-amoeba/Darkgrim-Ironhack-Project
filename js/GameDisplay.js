@@ -23,6 +23,15 @@ GameDisplay.prototype.mapConstructor = function () {
 let background = new Image();
 background.src = "./img/dirt-background.png";
 
+let cityBackground = new Image();
+cityBackground.src = "./img/concrete.png";
+
+let cityBackgroundGrass = new Image();
+cityBackgroundGrass.src = "./img/Grass-ground.png";
+
+let roofsImage = new Image();
+roofsImage.src = "./img/roofs.png";
+
 let wallImage = new Image();
 wallImage.src = "./img/wall.png";
 
@@ -59,27 +68,35 @@ carnibugFrame3.src = "./img/carnibugFrame3.png";
 
 GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArray, bugsArray) {
 
+  const ctx = this.game.gameBoard;
+
   //TERRAIN
 
   for (elm of this.map) { //all map
-    this.game.gameBoard.drawImage(background, elm[0] * TILE_WIDTH, elm[1] * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+    ctx.drawImage(background, elm[0] * TILE_WIDTH, elm[1] * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
   }
 
-  for (let i = 0; i < 14; i++) {
-    this.game.gameBoard.drawImage(wallImage, 14 * TILE_WIDTH, i * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+  for (let i = 0; i < 10; i++) {
+    ctx.drawImage(cityBackground, 17 * TILE_WIDTH, i * TILE_HEIGHT, TILE_WIDTH * 2, TILE_HEIGHT *2);
+    ctx.drawImage(roofsImage, 18 * TILE_WIDTH, i * TILE_HEIGHT, TILE_WIDTH*2, TILE_HEIGHT)*2;
   }
+  ctx.drawImage(cityBackgroundGrass, 17 * TILE_WIDTH,  0, TILE_WIDTH, TILE_HEIGHT);
+  ctx.drawImage(cityBackgroundGrass, 17 * TILE_WIDTH,  5 * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+
+  
+
 
   //WALL
 
-  for (let i = 0; i < 14; i++) {
-    this.game.gameBoard.drawImage(wallImage, 14 * TILE_WIDTH, i * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+  for (let i = 0; i < 10; i++) {
+    ctx.drawImage(wallImage, 14 * TILE_WIDTH, i * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
   }
 
   //BUILDINGS
 
   if (buildingsArray) {
     for (building of buildingsArray) {
-      this.game.gameBoard.drawImage(siloImage, building.x * TILE_WIDTH, building.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+      ctx.drawImage(siloImage, building.x * TILE_WIDTH, building.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
     }
 
   }
@@ -90,13 +107,9 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
 
     for (gun of gunsArray) {
       if (gun.type === "gun") {
-
-        this.game.gameBoard.drawImage(gunImage, gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
-
+        ctx.drawImage(gunImage, gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
       } else if (gun.type == "laser")
-
-        this.game.gameBoard.drawImage(laserGunImage, gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
-
+        ctx.drawImage(laserGunImage, gun.x * TILE_WIDTH, gun.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
     }
 
     //PROJECTILES    
@@ -104,18 +117,15 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
     for (bullet of this.game.bullets) {
 
       if (bullet.type === "bullet") {
-
-        this.game.gameBoard.save();
-        this.game.gameBoard.beginPath();
-        this.game.gameBoard.fillStyle = "rgb(0, 0, 0)";
-        this.game.gameBoard.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
-        this.game.gameBoard.fill();
-        this.game.gameBoard.closePath();
-        this.game.gameBoard.restore();
-
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = "rgb(0, 0, 0)";
+        ctx.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
       } else if (bullet.type === "laserbeam") {
-
-        this.game.gameBoard.drawImage(laserImage, 0, bullet.y + 33, 988, 5);
+        ctx.drawImage(laserImage, 0, bullet.y + 33, 988, 5);
       }
     }
   }
@@ -123,11 +133,10 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
   //POSITION SELECTOR 
 
   if (tileSelector) {
-
-    this.game.gameBoard.save();
-    this.game.gameBoard.fillStyle = "rgb(241, 204, 204)";
-    this.game.gameBoard.fillRect(tileSelector.x * TILE_WIDTH, tileSelector.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
-    this.game.gameBoard.restore();
+    ctx.save();
+    ctx.fillStyle = "rgb(241, 204, 204)";
+    ctx.fillRect(tileSelector.x * TILE_WIDTH, tileSelector.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+    ctx.restore();
 
   }
 
@@ -137,34 +146,31 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
     for (bug of bugsArray) {
 
       if (bug.brood === "bug") {
-
         if (bug.frame === 1) {
-          this.game.gameBoard.drawImage(bugFrame2, bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
+          ctx.drawImage(bugFrame2, bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
         } else if (bug.frame === 2) {
-          this.game.gameBoard.drawImage(bugFrame3, bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
+          ctx.drawImage(bugFrame3, bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
         } else {
-          this.game.gameBoard.drawImage(bugFrame1, bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
+          ctx.drawImage(bugFrame1, bug.x, bug.y, TILE_WIDTH, TILE_HEIGHT);
         }
-
       } else {
-
         if (bug.frame === 1) {
-          this.game.gameBoard.drawImage(carnibugFrame1, bug.x - 40, bug.y, 117, 76);
+          ctx.drawImage(carnibugFrame1, bug.x - 40, bug.y, 117, 76);
         } else if (bug.frame === 2) {
-          this.game.gameBoard.drawImage(carnibugFrame2, bug.x - 40, bug.y, 117, 76);
+          ctx.drawImage(carnibugFrame2, bug.x - 40, bug.y, 117, 76);
         } else {
-          this.game.gameBoard.drawImage(carnibugFrame3, bug.x - 40, bug.y, 117, 76);
+          ctx.drawImage(carnibugFrame3, bug.x - 40, bug.y, 117, 76);
         }
       }
 
       //life bar
 
-      this.game.gameBoard.save();
-      this.game.gameBoard.fillStyle = "rgb(10, 250, 80)";
-      this.game.gameBoard.fillRect(bug.x, bug.y + 10, bug.health * TILE_WIDTH / bug.fixedHealth, 10);
-      this.game.gameBoard.strokeStyle = "rgb(0, 0, 0)";
-      this.game.gameBoard.strokeRect(bug.x, bug.y + 10, TILE_WIDTH, 10);
-      this.game.gameBoard.restore();
+      ctx.save();
+      ctx.fillStyle = "rgb(10, 250, 80)";
+      ctx.fillRect(bug.x, bug.y + 10, bug.health * TILE_WIDTH / bug.fixedHealth, 10);
+      ctx.strokeStyle = "rgb(0, 0, 0)";
+      ctx.strokeRect(bug.x, bug.y + 10, TILE_WIDTH, 10);
+      ctx.restore();
 
     }
   }

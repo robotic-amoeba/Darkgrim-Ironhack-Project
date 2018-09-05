@@ -4,7 +4,7 @@ window.onload = function () {
   var game = new GameMain("game-board");
  
   game.startClock();
-
+  let get;
   let moneyTag = document.getElementById("money");
   let gunButton = document.getElementsByClassName("gun")[0];
   let laserButton = document.getElementsByClassName("laser")[0];
