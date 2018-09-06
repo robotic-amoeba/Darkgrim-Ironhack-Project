@@ -44,3 +44,5 @@ carnibugFrame1.src = "./img/carnibugFrame1.png";
 carnibugFrame2.src = "./img/carnibugFrame2.png";
 carnibugFrame3.src = "./img/carnibugFrame3.png";
 
+var bloodImage = new Image();
+bloodImage.src = "./img/blood-stain.png";

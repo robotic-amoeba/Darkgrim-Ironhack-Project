@@ -76,5 +76,4 @@ Bug.prototype.drawBug = function () {
   this.game.ctx.strokeRect(this.x, this.y + 10, TILE_WIDTH, 10);
   this.game.ctx.restore();
 
-
 }

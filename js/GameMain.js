@@ -16,6 +16,7 @@ GameMain.prototype.newGame = function () {
   this.city = new City(this);
   this.bugsArray = [];
   this.bullets = [];
+  this.deadBugs = [];
 }
 
 GameMain.prototype.startClock = function () {
@@ -48,6 +49,12 @@ GameMain.prototype.startClock = function () {
     this.gameDisplay.paintMap();
     
     //BUGS AND SHOOT
+
+    if (this.deadBugs) {
+      this.deadBugs.forEach(function(){
+        this.drawBlood();
+      }.bind(this))
+    }
     
     if (this.bugsArray) {
       for (let bug of this.bugsArray) {
@@ -57,18 +64,18 @@ GameMain.prototype.startClock = function () {
         } else {
           bug.moveBug();
           bug.moveFrame();
-          bug.drawBug();
-          
-        }
-      }
-      if (this.city.gunsArray) {
-        for (let weapon of this.city.gunsArray) {
-          if (this.clock % weapon.fireRate === 0)
-          weapon.shoot();
+          bug.drawBug(); 
         }
       }
     }
     
+    if (this.city.gunsArray) {
+      for (let weapon of this.city.gunsArray) {
+        if (this.clock % weapon.fireRate === 0)
+        weapon.shoot();
+      }
+    }
+
     //CITY
     
     //GUNS
@@ -143,15 +150,25 @@ GameMain.prototype.detectCollisions = function (bullet) {
       bullet.x + TILE_WIDTH >= bug.x && bullet.y == bug.y) {
       bug.health -= bullet.damage;
       if (bug.health <= 0) {
+        splatSound.play();
+        this.deadBugs.push({x: bug.x, y: bug.y});
         this.bugsArray.splice(this.bugsArray.indexOf(bug), 1);
       }
       if (bullet.type === "bullet") {
         this.bullets.splice(this.bullets.indexOf(bullet), 1);
-
       }
     }
   }
 
+}
+
+GameMain.prototype.drawBlood = function() {
+  if (this.deadBugs) {
+    console.log(this.deadBugs)
+    this.deadBugs.forEach(function(bug){
+      this.ctx.drawImage(bloodImage, bug.x, bug.y + 10, TILE_WIDTH , TILE_HEIGHT);
+    }.bind(this)) 
+  }
 }
 
 

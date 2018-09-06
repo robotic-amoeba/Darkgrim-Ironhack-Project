@@ -24,10 +24,12 @@ Gun.prototype.shoot = function () {
   let bullet;
   if (this.type === "gun") {
 
+    gunSound.play();
     bullet = new Projectile(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, this.damage);
 
   } else if (this.type === "laser") {
 
+    laserSound.play();
     bullet = new LaserBeam(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, this.damage);
     
   }
