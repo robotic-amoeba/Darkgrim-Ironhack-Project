@@ -1,16 +1,14 @@
 
-
 function GameMain(canvas) {
 
   this.canvas = document.getElementById(canvas);
-  this.gameBoard = this.canvas.getContext("2d");
+  this.ctx = this.canvas.getContext("2d");
   this.fps = 60;
   this.moneyTag;
   this.buildingButton;
   this.newGame();
 
 }
-
 
 GameMain.prototype.newGame = function () {
   this.gameDisplay = new GameDisplay(this);
@@ -20,63 +18,96 @@ GameMain.prototype.newGame = function () {
   this.bullets = [];
 }
 
-
 GameMain.prototype.startClock = function () {
-
+  
   let seconds;
   seconds = this.clock / 60;
-
+  
   this.clock = setInterval(function () {
-
+    
     this.clock++;
-
+    
+    //GAME STATUS
+    
     if (this.clock % 30 === 0) {
       this.player.money += 1;
       if (this.city.buildingsArray) {
         for (let building of this.city.buildingsArray) {
-          building.generateProfit(building);
+          building.generateProfit();
         }
       }
       this.gameDisplay.displayStatus();
     }
-
-    if ( this.clock > 60 && this.clock % 300 === 0) {
+    
+    if (this.clock > 60 && this.clock % 300 === 0) {
       this.spawnBug();
     }
 
-
+    //PAIN TERRAIN
+    
+    this.gameDisplay.paintMap();
+    
+    //BUGS AND SHOOT
+    
     if (this.bugsArray) {
       for (let bug of this.bugsArray) {
         if (bug.x >= 13 * TILE_WIDTH) {
           bug.attack();
+          bug.drawBug();
         } else {
           bug.moveBug();
           bug.moveFrame();
-
+          bug.drawBug();
+          
         }
       }
       if (this.city.gunsArray) {
         for (let weapon of this.city.gunsArray) {
           if (this.clock % weapon.fireRate === 0)
-            weapon.shoot();
+          weapon.shoot();
         }
       }
     }
+    
+    //CITY
+    
+    //GUNS
+    
+    if (this.city.gunsArray) {
+      
+      for (gun of this.city.gunsArray) {
+        gun.drawGun();
+      }
+    }
+    
+    //BUILDINGS
+    
+    if (this.city.buildingsArray) {
+      for (building of this.city.buildingsArray) {
+        building.drawBuilding();
+      }
+    }
+
+
+    //BULLETS
 
     if (this.bullets) {
       for (bullet of this.bullets) {
         bullet.moveProjectile();
+        bullet.drawProjectile();
         this.detectCollisions(bullet);
       }
       this.eraseBullets();
     }
+    //POSITION SELECTOR 
 
-    this.gameDisplay.paintMap(this.player.tileSelector, this.city.gunsArray,
-      this.city.buildingsArray, this.bugsArray);
+    if (this.player.tileSelector) {
+      this.player.drawTileSelector();
+    }
+
 
   }.bind(this), 1000 / this.fps)
 }
-
 
 GameMain.prototype.spawnBug = function () {
 
@@ -91,7 +122,6 @@ GameMain.prototype.spawnBug = function () {
   }
 }
 
-
 GameMain.prototype.moveProjectiles = function (bullet) { //moves array of projectiles of each gun
 
   bullet.x -= bullet.speed;
@@ -102,7 +132,6 @@ GameMain.prototype.eraseBullets = function () {
 
   this.bullets = this.bullets.filter(bullet => bullet.x > -10)
 }
-
 
 GameMain.prototype.detectCollisions = function (bullet) {
 

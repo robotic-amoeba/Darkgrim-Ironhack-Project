@@ -27,5 +27,14 @@ Projectile.prototype.moveProjectile = function () { //moves array of projectiles
 LaserBeam.prototype = Object.create(Projectile.prototype);
 LaserBeam.constructor = LaserBeam;
 
+Projectile.prototype.drawProjectile = function() {
+
+  if (this.type === "bullet") {
+    this.game.ctx.drawImage(bulletImage, this.x + 10, this.y + 30, 27, 15);
+  } else if (this.type === "laserbeam") {
+    this.game.ctx.drawImage(laserImage, 0, this.y + 33, 988, 5);
+  }
+}
+
   
 

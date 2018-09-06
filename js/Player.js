@@ -15,7 +15,7 @@ Player.prototype.createGun = function (game, x, y) {
     this.game.city.gunsArray.push(gun);
     this.money -= this.game.city.gunPrice;
   } else {
-    console.log("Not enough money")
+    console.log("Not enough money");
   }
 }
 
@@ -64,7 +64,6 @@ Player.prototype.upgradeGun = function (option, x, y) {
   }.bind(this))
 
 }
-
 
 
 Player.prototype.placeSelector = function (buttons, elementToBuild) {
@@ -153,6 +152,14 @@ Player.prototype.whatToCreate = function (option) {
   } else {
     this.createBuilding(this.game, this.tileSelector.x, this.tileSelector.y)
   }
+}
+
+Player.prototype.drawTileSelector = function () {
+
+  this.game.ctx.save();
+  this.game.ctx.fillStyle = "rgb(241, 204, 204)";
+  this.game.ctx.fillRect(this.tileSelector.x * TILE_WIDTH, this.tileSelector.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+  this.game.ctx.restore();
 }
 
 
