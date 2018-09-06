@@ -20,18 +20,18 @@ GameMain.prototype.newGame = function () {
 }
 
 GameMain.prototype.startClock = function () {
-  
+
   let seconds;
   seconds = this.clock / 60;
-  
+
   this.clock = setInterval(function () {
-    
+
     this.clock++;
-    
+
     //GAME STATUS
-    
+
     if (this.clock % 30 === 0) {
-      this.player.money += 1;
+      this.player.money += 2;
       if (this.city.buildingsArray) {
         for (let building of this.city.buildingsArray) {
           building.generateProfit();
@@ -39,23 +39,24 @@ GameMain.prototype.startClock = function () {
       }
       this.gameDisplay.displayStatus();
     }
-    
+
     if (this.clock > 60 && this.clock % 300 === 0) {
       this.spawnBug();
     }
 
-    //PAIN TERRAIN
-    
+
+    //PAINT TERRAIN AND CITY
+
     this.gameDisplay.paintMap();
-    
+
     //BUGS AND SHOOT
 
     if (this.deadBugs) {
-      this.deadBugs.forEach(function(){
+      this.deadBugs.forEach(function () {
         this.drawBlood();
       }.bind(this))
     }
-    
+
     if (this.bugsArray) {
       for (let bug of this.bugsArray) {
         if (bug.x >= 13 * TILE_WIDTH) {
@@ -64,31 +65,31 @@ GameMain.prototype.startClock = function () {
         } else {
           bug.moveBug();
           bug.moveFrame();
-          bug.drawBug(); 
+          bug.drawBug();
         }
       }
     }
-    
+
     if (this.city.gunsArray) {
       for (let weapon of this.city.gunsArray) {
         if (this.clock % weapon.fireRate === 0)
-        weapon.shoot();
+          weapon.shoot();
       }
     }
 
     //CITY
-    
+
     //GUNS
-    
+
     if (this.city.gunsArray) {
-      
+
       for (gun of this.city.gunsArray) {
         gun.drawGun();
       }
     }
-    
+
     //BUILDINGS
-    
+
     if (this.city.buildingsArray) {
       for (building of this.city.buildingsArray) {
         building.drawBuilding();
@@ -111,6 +112,8 @@ GameMain.prototype.startClock = function () {
     if (this.player.tileSelector) {
       this.player.drawTileSelector();
     }
+
+    this.city.drawStructuralBar();
 
 
   }.bind(this), 1000 / this.fps)
@@ -151,7 +154,7 @@ GameMain.prototype.detectCollisions = function (bullet) {
       bug.health -= bullet.damage;
       if (bug.health <= 0) {
         splatSound.play();
-        this.deadBugs.push({x: bug.x, y: bug.y});
+        this.deadBugs.push({ x: bug.x, y: bug.y });
         this.bugsArray.splice(this.bugsArray.indexOf(bug), 1);
       }
       if (bullet.type === "bullet") {
@@ -162,12 +165,11 @@ GameMain.prototype.detectCollisions = function (bullet) {
 
 }
 
-GameMain.prototype.drawBlood = function() {
+GameMain.prototype.drawBlood = function () {
   if (this.deadBugs) {
-    console.log(this.deadBugs)
-    this.deadBugs.forEach(function(bug){
-      this.ctx.drawImage(bloodImage, bug.x, bug.y + 10, TILE_WIDTH , TILE_HEIGHT);
-    }.bind(this)) 
+    this.deadBugs.forEach(function (bug) {
+      this.ctx.drawImage(bloodImage, bug.x, bug.y + 10, TILE_WIDTH, TILE_HEIGHT);
+    }.bind(this))
   }
 }
 

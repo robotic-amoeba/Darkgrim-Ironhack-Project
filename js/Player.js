@@ -2,7 +2,7 @@
 function Player(game) {
   this.game = game;
   this.points = 0;
-  this.money = 200;
+  this.money = 300;
   this.tileSelector = {};
 }
 
@@ -57,7 +57,7 @@ Player.prototype.upgradeGun = function (option, x, y) {
         this.money -= this.game.city.upgradeGunPrice;
       } else if ("upgradeDMG") {
         weapon.damage += 5;
-        console.log(weapon.damage);
+        this.money -= this.game.city.upgradeGunDMG;
 
       }
     }

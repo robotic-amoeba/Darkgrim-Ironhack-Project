@@ -36,7 +36,7 @@ Bug.prototype.moveBug = function (bug) {
 Bug.prototype.attack = function () {
   this.game.city.structuralPoints -= this.damage;
   if (this.game.city.structuralPoints <= 0) {
-    console.log("LA CIUDAD HA CAIDO!!")
+    alert("¡¡DARKGRIM HA CAIDO!!");
   }
 }
 
@@ -68,7 +68,9 @@ Bug.prototype.drawBug = function () {
       this.game.ctx.drawImage(carnibugFrame3, this.x - 40, this.y, 117, 76);
     }
   }
-  
+
+  //health bar
+
   this.game.ctx.save();
   this.game.ctx.fillStyle = "rgb(10, 250, 80)";
   this.game.ctx.fillRect(this.x, this.y + 10, this.health * TILE_WIDTH / this.fixedHealth, 10);

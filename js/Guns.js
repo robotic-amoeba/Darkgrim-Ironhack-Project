@@ -31,13 +31,13 @@ Gun.prototype.shoot = function () {
 
     laserSound.play();
     bullet = new LaserBeam(this.game, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, this.damage);
-    
+
   }
   this.game.bullets.push(bullet);
 
 }
 
-Gun.prototype.drawGun = function() {
+Gun.prototype.drawGun = function () {
   if (this.type === "gun") {
     this.game.ctx.drawImage(gunImage, this.x * TILE_WIDTH, this.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
   } else if (this.type == "laser")

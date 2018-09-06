@@ -2,7 +2,7 @@ function Building(game, x, y) {
   this.game = game;
   this.x = x;
   this.y = y;
-  this.profit = 1;
+  this.profit = 4;
   this.health;
 }
 

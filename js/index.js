@@ -1,7 +1,7 @@
 
 
 window.onload = function () {
-  
+
   startTheme.play();
 
   let startButton = document.getElementById("start-button");
