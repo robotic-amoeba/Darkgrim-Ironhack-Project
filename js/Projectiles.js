@@ -1,4 +1,4 @@
- function Projectile(game, x, y) {
+ function Projectile(game, x, y, damage) {
 
   this.game = game;
   this.type = "bullet";
@@ -6,15 +6,15 @@
   this.y = y;
   this.r = 3;
   this.speed = 40;
-  this.damage = 10;
+  this.damage = damage;
 }
 
-function LaserBeam(game, x, y) {
+function LaserBeam(game, x, y, damage) {
   
   Projectile.call(this, game, x, y);
   this.type = "laserbeam";
   this.speed = 30;
-  this.damage = 5;
+  this.damage = damage;
 }
 
 

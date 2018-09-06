@@ -5,7 +5,7 @@ function City(game) {
   this.gunsArray = [];
   this.structuralPoints = 1000;
   this.buildPrice = 50;
-  this.gunPrice = 25;
+  this.gunPrice = 35;
   this.laserPrice = 50;
   this.upgradeGunPrice = 35;
 }

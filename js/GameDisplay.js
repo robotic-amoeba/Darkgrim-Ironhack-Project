@@ -19,6 +19,8 @@ GameDisplay.prototype.mapConstructor = function () {
 
 }
 
+let bulletImage = new Image();
+bulletImage.src = "./img/bullet.png"
 
 let background = new Image();
 background.src = "./img/dirt-background.png";
@@ -117,13 +119,7 @@ GameDisplay.prototype.paintMap = function (tileSelector, gunsArray, buildingsArr
     for (bullet of this.game.bullets) {
 
       if (bullet.type === "bullet") {
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = "rgb(0, 0, 0)";
-        ctx.arc(bullet.x + 35, bullet.y + 35, bullet.r, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
-        ctx.restore();
+        ctx.drawImage(bulletImage, bullet. x + 10, bullet.y + 30, 27, 15);
       } else if (bullet.type === "laserbeam") {
         ctx.drawImage(laserImage, 0, bullet.y + 33, 988, 5);
       }

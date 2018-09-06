@@ -46,14 +46,20 @@ Player.prototype.createBuilding = function (game, x, y) {
 
 
 
-Player.prototype.upgradeGun = function(x, y) {
+Player.prototype.upgradeGun = function (option, x, y) {
 
-  this.game.city.gunsArray.forEach(function(weapon) {
-    
+  this.game.city.gunsArray.forEach(function (weapon) {
+
     if (x === weapon.x && y === weapon.y) {
-      let laser = new Laser(this.game, x, y);
-      this.game.city.gunsArray.splice(this.game.city.gunsArray.indexOf(weapon), 1, laser);
-      this.money -= this.game.city.upgradeGunPrice;
+      if (option == "upgrade") {
+        let laser = new Laser(this.game, x, y);
+        this.game.city.gunsArray.splice(this.game.city.gunsArray.indexOf(weapon), 1, laser);
+        this.money -= this.game.city.upgradeGunPrice;
+      } else if ("upgradeDMG") {
+        weapon.damage += 5;
+        console.log(weapon.damage);
+
+      }
     }
   }.bind(this))
 
@@ -66,10 +72,10 @@ Player.prototype.placeSelector = function (buttons, elementToBuild) {
   for (let button of buttons) {
     button.disabled = true;
   }
-  if (elementToBuild == "gun" || elementToBuild == "laser" || elementToBuild == "upgrade") {
-    this.tileSelector = { x: 14, y: 0 }
-  } else if (elementToBuild === "building") {
+  if (elementToBuild === "building") {
     this.tileSelector = { x: 15, y: 0 }
+  } else {
+    this.tileSelector = { x: 14, y: 0 }
   }
 
   const choosePos = event => {
@@ -95,13 +101,13 @@ Player.prototype.placeSelector = function (buttons, elementToBuild) {
         break;
 
       case "ArrowRight":
-        if (elementToBuild === ("building") && this.tileSelector.x < 19) {
+        if (elementToBuild === ("building") && this.tileSelector.x < 17) {
           this.tileSelector.x += 1;
         }
         break;
 
       case "Space":
-        if (elementToBuild == "upgrade"){
+        if (elementToBuild == "upgrade" || elementToBuild == "upgradeDMG") {
           this.whatToCreate(elementToBuild);
         } else if (elementToBuild == "building" && this.checkIfVacant(this.game.city.buildingsArray)) {
           this.whatToCreate(elementToBuild);
@@ -142,9 +148,9 @@ Player.prototype.whatToCreate = function (option) {
     this.createLaser(this.game, this.tileSelector.x, this.tileSelector.y);
   } else if (option == "gun") {
     this.createGun(this.game, this.tileSelector.x, this.tileSelector.y);
-  } else if (option == "upgrade") {
-    this.upgradeGun(this.tileSelector.x, this.tileSelector.y);
-  } else if (option == "building"){
+  } else if (option == "upgrade" || option == "upgradeDMG") {
+    this.upgradeGun(option, this.tileSelector.x, this.tileSelector.y);
+  } else {
     this.createBuilding(this.game, this.tileSelector.x, this.tileSelector.y)
   }
 }

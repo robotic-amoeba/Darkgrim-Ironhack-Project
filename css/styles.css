@@ -1,43 +1,70 @@
 body {
-  background-color: rgb(38, 38, 80);
+  background-color: rgb(35, 35, 36);
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.main-menu {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: black;
+  z-index: 30;
+}
+
+h1 {
+  font-size: 4em;
+  color: white;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 800;
+
+
+}
+
+#start-button {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 40px;
+  width: 200px;
+  font-size: 2em;
 }
 
 #game-board {
   border: solid;
   position: absolute;
-  bottom: 5px;
+  z-index: 1;
+  top: 5px;
   left: 5px;
 }
 
-.gun {
+.build-menu {
+  width: 65px;
+  height: 700px;
   position: absolute;
-  right: 10px;
-  top: 60px;
-}
-
-.building {
-  position: absolute;
-  right: 10px;
-  top: 240px;
-}
-
-.laser {
-  position: absolute;
-  right: 10px;
-  top: 120px;
-
-}
-
-.up {
-  position: absolute;
-  right: 10px;
-  top: 180px;
+  top: 5px;
+  right: 0px;
+  background-color: rgb(33, 33, 56);
 }
 
 #money {
-  position: absolute;
-  top: 30px;
-  right: 20px;
   color: white;
   font-size: 20px;
+  margin: 20px 0;
+}
+
+.button {
+  font-size: 1em;
+  width: 80%;
+  margin: 10px 0;
+}
+
+.button img {
+  width: 35px
 }

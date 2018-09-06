@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +12,27 @@
   <script type="text/javascript" src="js/Player.js"></script>
   <script type="text/javascript" src="js/Guns.js"></script>
   <script type="text/javascript" src="js/Bugs.js"></script>
-  <script type="text/javascript" src="js/GameDisplay.js"></script>  
+  <script type="text/javascript" src="js/GameDisplay.js"></script>
   <script type="text/javascript" src="js/GameMain.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
   <link rel="stylesheet" href="css/styles.css">
   <title>darkGrim</title>
 </head>
-<body>
-    <canvas id="game-board" width="1400" height="700"></canvas>
-    <div id="money">$0.00</div>
-    <button class="button gun">GUN <br> $25</button>
-    <button class="button laser">LAS <br> $50</button>
-    <button class="button up">UP <br> $35</button>
-    <button class="button building">SILO <br> $50</button>
 
+<body>
+  <div class="main-menu">
+    <h1>darkGrim</h1>
+    <button id="start-button">START</button>
+  </div>
+  <canvas id="game-board" width="1400" height="700"></canvas>
+  <div class="build-menu">
+    <div id="money">$0.00</div>
+    <button class="button gun"><img src="./img/gun.png" alt="gun"> <br> $35</button>
+    <button class="button laser"><img src="./img/laserGun.png" alt="laser"> <br> $50</button>
+    <button class="button laser-to-gun">L->G<br> $35</button>
+    <button class="button gun-up-damage"><br>UP $50</button>
+    <button class="button building"><img src="./img/silo.png" alt=""> <br> $50</button>
+  </div>
 </body>
+
 </html>
