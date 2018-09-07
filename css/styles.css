@@ -12,13 +12,13 @@ body {
   position: fixed;
   background-color: black;
   z-index: 30;
+  color: white;
 }
 
 h1 {
   font-size: 4em;
-  color: white;
   position: absolute;
-  top: 30%;
+  top: 20%;
   left: 50%;
   transform: translateX(-50%);
   font-weight: 800;
@@ -28,13 +28,30 @@ h1 {
 
 #start-button {
   position: absolute;
-  top: 40%;
+  top: 32%;
   left: 50%;
   transform: translateX(-50%);
   padding: 40px;
   width: 200px;
   font-size: 2em;
 }
+
+.main-menu img {
+
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  transform: translateX(-50%);
+}
+
+.main-menu h2 {
+
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translateX(-50%);
+}
+
 
 #game-board {
   border: solid;
@@ -66,4 +83,20 @@ h1 {
 
 .button img {
   width: 35px
+}
+
+.game-over {
+  font-family: 'Courier New', Courier, monospace;
+  position: absolute;
+  z-index: 3;
+  text-align: center;
+  padding: 50px;
+  color: white;
+  background-color: black;
+  height: 250px;
+  width: 1000px;
+  top: 200px;
+  left: 150px;
+  display: none;
+  font-size: 3em;
 }

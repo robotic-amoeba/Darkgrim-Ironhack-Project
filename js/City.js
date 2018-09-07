@@ -19,7 +19,7 @@ City.prototype.drawStructuralBar = function () {
     this.game.ctx.strokeStyle = "rgb(0, 0, 0)";
     this.game.ctx.strokeRect(1350, 50, 30, 600);
     this.game.ctx.restore();
-  } else {
+  } else if (this.structuralPoints > 0){
     this.game.ctx.save();
     this.game.ctx.fillStyle = "rgb(250, 10, 10)";
     this.game.ctx.fillRect(1350, 650, 30, -this.structuralPoints * 600 / 10000);

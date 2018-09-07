@@ -51,11 +51,11 @@ Player.prototype.upgradeGun = function (option, x, y) {
   this.game.city.gunsArray.forEach(function (weapon) {
 
     if (x === weapon.x && y === weapon.y) {
-      if (option == "upgrade") {
+      if (option == "upgrade" && this.money >= this.game.city.upgradeGunPrice) {
         let laser = new Laser(this.game, x, y);
         this.game.city.gunsArray.splice(this.game.city.gunsArray.indexOf(weapon), 1, laser);
         this.money -= this.game.city.upgradeGunPrice;
-      } else if ("upgradeDMG") {
+      } else if ("upgradeDMG" && this.money >= this.game.city.upgradeGunDMG) {
         weapon.damage += 5;
         this.money -= this.game.city.upgradeGunDMG;
 
@@ -103,6 +103,14 @@ Player.prototype.placeSelector = function (buttons, elementToBuild) {
         if (elementToBuild === ("building") && this.tileSelector.x < 17) {
           this.tileSelector.x += 1;
         }
+        break;
+
+      case "Escape":
+        this.tileSelector = {};
+        for (let button of buttons) {
+          button.disabled = false;
+        }
+        window.removeEventListener("keydown", choosePos);
         break;
 
       case "Space":
@@ -157,7 +165,7 @@ Player.prototype.whatToCreate = function (option) {
 Player.prototype.drawTileSelector = function () {
 
   this.game.ctx.save();
-  this.game.ctx.fillStyle = "rgb(241, 204, 204)";
+  this.game.ctx.fillStyle = "rgba(241, 204, 204, 0.3)";
   this.game.ctx.fillRect(this.tileSelector.x * TILE_WIDTH, this.tileSelector.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
   this.game.ctx.restore();
 }

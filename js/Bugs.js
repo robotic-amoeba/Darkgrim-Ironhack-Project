@@ -36,7 +36,8 @@ Bug.prototype.moveBug = function (bug) {
 Bug.prototype.attack = function () {
   this.game.city.structuralPoints -= this.damage;
   if (this.game.city.structuralPoints <= 0) {
-    alert("¡¡DARKGRIM HA CAIDO!!");
+    let gameOver = document.getElementsByClassName("game-over")[0];
+    gameOver.style.display = "block";
   }
 }
 

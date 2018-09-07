@@ -2,6 +2,7 @@
 
 window.onload = function () {
 
+  startTheme.loop = true;
   startTheme.play();
 
   let startButton = document.getElementById("start-button");
@@ -9,6 +10,8 @@ window.onload = function () {
 
   startButton.onclick = function StartGame() {
 
+    startTheme.pause();
+    mainTheme.loop = true;
     mainTheme.play();
 
 
