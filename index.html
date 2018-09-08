@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/game.css">
   <script type="text/javascript" src="js/Audio.js"></script>
   <script type="text/javascript" src="js/Images.js"></script>
   <script type="text/javascript" src="js/Projectiles.js"></script>
@@ -17,25 +18,46 @@
   <script type="text/javascript" src="js/GameDisplay.js"></script>
   <script type="text/javascript" src="js/GameMain.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
-  <link rel="stylesheet" href="css/styles.css">
   <title>darkGrim</title>
 </head>
 
 <body>
+  <div class="controls-credits">
+    <h2>CONTROLS</h2>
+    <div class="controls-wrapper">
+      <p><img src="./img/gun.png" alt="gun icon">Artillery: higth rate of fire and DMG.</p>
+      <p><img src="./img/laserGun.png" alt="laser icon">Laser: laser beams pass through enemies.</p>
+      <p><img src="./img/gun-to-laser.png" alt="gun to laser">You can upgrade artillery to laser guns.</p>
+      <p><img src="./img/upgrade-img.png" alt="upgrade icon">You can upgrade the damage of any turret.</p>
+      <p><img src="./img/silo.png" alt="silo icon">Build silos to gain more money. Tip: highly recommended ;)</p>
+      <p>Use <img src="./img/wasd-image.png" alt="wasd image"> to choose the position you want to buid in and Space Bar to build or Esc to cancel.</p>
+      <p>Use the right bar to build:</p>
+    </div>
+    <p>Enjoy!</p>
+    <h2>Credits</h2>
+    <p>Sprites are zerg units from the Starcraft game (Blizzard).</p>
+    <p>Turrets: <a href="http://freegameassets.blogspot.com">Krasi Wasilev.</a></p>
+    <p>Tiles: <a href="https://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis">hyptosis.</a></p>
+    <p>Background image: <a href="https://www.deviantart.com/pulsatingshadow">pulsatingshadow.</a></p>
+    <p>This game was made in a week for the Ironhack videogame project.</p>
+    <p>Special thanks to Gabi, my TA, and all my classmates.</p>
+  </div>
   <div class="main-menu">
     <h1>darkGrim</h1>
     <button id="start-button">START</button>
     <img src="./img/carnibugFrame2.png" alt="roach-image">
     <h2>a robotic-amoeba game :)</h2>
   </div>
-  <canvas id="game-board" width="1400" height="700"></canvas>
-  <div class="build-menu">
-    <div id="money">$0.00</div>
-    <button class="button gun"><img src="./img/gun.png" alt="gun"> <br> $100</button>
-    <button class="button laser"><img src="./img/laserGun.png" alt="laser"> <br> $200</button>
-    <button class="button laser-to-gun"> <img src="./img/gun-to-laser.png" alt="gun to laser icon"> <br> $150</button>
-    <button class="button gun-up-damage"><img src="./img/upgrade-img.png" alt="upgrade icon">  <br> $100</button>
-    <button class="button building"><img src="./img/silo.png" alt=""> <br> $150</button>
+  <div class="game-wrapper">
+    <canvas id="game-board" width="1400" height="700"></canvas>
+    <div class="build-menu">
+      <div id="money">$0.00</div>
+      <button class="button gun"><img src="./img/gun.png" alt="gun"> <br> $100</button>
+      <button class="button laser"><img src="./img/laserGun.png" alt="laser"> <br> $200</button>
+      <button class="button laser-to-gun"> <img src="./img/gun-to-laser.png" alt="gun to laser icon"> <br> $150</button>
+      <button class="button gun-up-damage"><img src="./img/upgrade-img.png" alt="upgrade icon"> <br> $100</button>
+      <button class="button building"><img src="./img/silo.png" alt=""> <br> $150</button>
+    </div>
   </div>
   <div class="game-over">
     <h3>¡¡NEW SHANGAI HAS FOLLEN!!</h3>
