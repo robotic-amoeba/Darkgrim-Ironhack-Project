@@ -8,6 +8,18 @@ window.onload = function () {
   let startButton = document.getElementById("start-button");
   var game = new GameMain("game-board");
 
+  let controlsPanel = document.getElementsByClassName("controls-credits")[0];
+  let controlsButton = document.getElementById("controls-button");
+  let backButton = document.getElementById("back-to-menu");
+
+  controlsButton.onclick = function () {
+    controlsPanel.style.display = "block";
+  }
+
+  backButton.onclick = function () {
+    controlsPanel.style.display = "none";
+  }
+
   startButton.onclick = function StartGame() {
 
     startTheme.pause();

@@ -61,6 +61,7 @@ GameMain.prototype.startClock = function () {
       for (let bug of this.bugsArray) {
         if (bug.x >= 13 * TILE_WIDTH) {
           bug.attack();
+          bug.attackFrames();
           bug.drawBug();
         } else {
           bug.moveBug();

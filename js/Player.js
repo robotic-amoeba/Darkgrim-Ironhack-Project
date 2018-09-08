@@ -81,25 +81,25 @@ Player.prototype.placeSelector = function (buttons, elementToBuild) {
 
     switch (event.code) {
 
-      case "ArrowDown":
+      case "KeyS":
         if (this.tileSelector.y < 9) {
           this.tileSelector.y += 1;
         }
         break;
 
-      case "ArrowUp":
+      case "KeyW":
         if (this.tileSelector.y > 0) {
           this.tileSelector.y -= 1;
         }
         break;
 
-      case "ArrowLeft":
+      case "KeyA":
         if (elementToBuild === ("building") && this.tileSelector.x > 15) {
           this.tileSelector.x -= 1;
         }
         break;
 
-      case "ArrowRight":
+      case "KeyD":
         if (elementToBuild === ("building") && this.tileSelector.x < 17) {
           this.tileSelector.x += 1;
         }

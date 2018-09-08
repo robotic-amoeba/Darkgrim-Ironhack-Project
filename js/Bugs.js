@@ -50,6 +50,16 @@ Bug.prototype.moveFrame = function () {
   }
 }
 
+Bug.prototype.attackFrames = function () {
+  if (this.game.clock % 20) {
+    this.frame = 2;
+    bugAttackSound.play();
+    console.log("attack!");
+  } else {
+    this.frame = 3;
+  }
+}
+
 Bug.prototype.drawBug = function () {
 
   if (this.brood === "bug") {

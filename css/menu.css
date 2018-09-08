@@ -3,26 +3,41 @@
   height: 100%;
   position: fixed;
   background-color: black;
-  z-index: 30;
+  z-index: 3;
   color: white;
 }
 
-#start-button {
+#start-button, #controls-button, #back-to-menu {
   position: absolute;
-  top: 32%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 40px;
   width: 200px;
   font-size: 2em;
   cursor: pointer;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+}
+
+#start-button {
+  top: 32%;
+  padding: 40px;
+}
+
+#controls-button {
+  top: 46%;
+  padding: 20px;
+}
+
+#back-to-menu {
+  bottom: 5%;
+  padding: 10px;
+  font-size: 1.5em;
 }
 
 .main-menu img {
 
   position: absolute;
   left: 50%;
-  top: 57%;
+  bottom: 20%;
   transform: translateX(-50%);
 }
 
@@ -30,14 +45,64 @@
 
   position: absolute;
   left: 50%;
-  top: 70%;
+  bottom: 10%;
   transform: translateX(-50%);
+}
+
+.controls-credits {
+  position: fixed;
+  text-align: center;
+  z-index: 4;
+  background-color: black;
+  color: white;
+  width: 100vw;
+  height: 100vh;
+  font-size: 2em;
+  display: none;
+}
+
+.controls-credits h2 {
+  margin-bottom: 20px;
+}
+
+.controls-credits img {
+  width: 100px;
+}
+
+.controls-wrapper {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 auto; 
+  font-size: 0.7em;
+}
+
+.controls-wrapper p {
+  width: 20%;
+}
+
+.controls-wrapper img {
+  display: block;
+  margin: 0 auto;
+  width: 90px;
+  padding-bottom: 20px;
+}
+
+.credits-wrapper {
+  font-size: 0.7em;
+  margin-top: 60px;
+}
+
+.credits-wrapper a {
+  text-decoration: none;
+  color: rgb(119, 25, 143);
 }
 
 .game-over {
   font-family: 'Courier New', Courier, monospace;
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   text-align: center;
   padding: 50px;
   color: white;
@@ -49,29 +114,4 @@
   display: none;
   font-size: 3em;
   border-radius: 15px;
-}
-
-.controls-credits {
-  position: fixed;
-  text-align: center;
-  z-index: 5;
-  background-color: black;
-  color: white;
-  width: 100vw;
-  height: 100vh;
-  font-size: 1.5em;
-  display: none;
-}
-
-.controls-credits img {
-  width: 50px;
-  vertical-align: middle;
-}
-
-.controls-wrapper {
-  display: flex;
-  width: 70%;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin: 0 auto;
 }
