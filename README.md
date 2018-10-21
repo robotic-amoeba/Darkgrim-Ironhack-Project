@@ -1,6 +1,8 @@
 # darkGrim
 
-My Ironhack video game project
+My Ironhack video game project.
+
+You can play it here: https://robotic-amoeba.github.io/darkGrim-videogame/
 
 ### What is this about?
 
